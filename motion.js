@@ -42,6 +42,8 @@
   preference.addEventListener('change', prepare);
   document.addEventListener('wingscraft:language', prepare);
   document.addEventListener('focusin', event => {
+    // Pointer focus must not jump a moving link between press and release.
+    if (!event.target.matches(':focus-visible')) return;
     targets.filter(element => element.contains(event.target)).forEach(element => {
       element.classList.add('scroll-immediate');
       show(element);
