@@ -1,9 +1,10 @@
 'use strict';
 
-const CACHE_NAME = 'wingscraft-v1';
+const CACHE_NAME = 'wingscraft-polish2';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
+  '/workflow.js?v=polish2',
   '/services.html',
   '/examples.html',
   '/projects.html',
@@ -15,14 +16,14 @@ const PRECACHE_ASSETS = [
   '/sample-coffee.html',
   '/demo-booking.html',
   '/demo-inquiries.html',
-  '/style.css?v=12',
-  '/script.js?v=12',
-  '/motion.js?v=12',
-  '/navigation.js?v=12',
-  '/contact.js?v=12',
-  '/contact-transport.js?v=12',
+  '/style.css?v=polish2',
+  '/script.js?v=polish2',
+  '/motion.js?v=polish2',
+  '/navigation.js?v=polish2',
+  '/contact.js?v=polish2',
+  '/contact-transport.js?v=polish2',
   '/demo.css',
-  '/demo.js',
+  '/demo.js?v=polish2',
   '/sample.css',
   '/sample.js',
   '/site-config.js?v=078713b28d',
@@ -31,7 +32,7 @@ const PRECACHE_ASSETS = [
   '/assets/favicon.svg',
   '/assets/apple-touch-icon.png',
   '/assets/og.png'
-];
+].map(path => new URL(path.slice(1), self.registration.scope).href);
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -47,7 +48,7 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+        keys.filter(key => key.startsWith('wingscraft-') && key !== CACHE_NAME).map(key => caches.delete(key))
       );
     }).then(() => self.clients.claim())
   );
@@ -72,7 +73,7 @@ self.addEventListener('fetch', event => {
         return response;
       }).catch(() => {
         return caches.match(event.request).then(cached => {
-          return cached || caches.match('/404.html');
+          return cached || caches.match(new URL('404.html',self.registration.scope).href);
         });
       })
     );

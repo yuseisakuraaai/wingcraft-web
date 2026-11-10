@@ -26,6 +26,7 @@
 
  // --- Draft Auto-save ---
  const DRAFT_KEY = 'wingscraft-contact-draft';
+ try{localStorage.removeItem(DRAFT_KEY)}catch{}
  function saveDraft(){
   try {
    const data = {
@@ -36,22 +37,22 @@
     message: form.elements.message.value
    };
    if (data.name || data.email || data.company || data.message) {
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(data));
    } else {
-    localStorage.removeItem(DRAFT_KEY);
+    sessionStorage.removeItem(DRAFT_KEY);
    }
   } catch {}
  }
 
  function clearDraft(){
-  try { localStorage.removeItem(DRAFT_KEY); } catch {}
+  try { sessionStorage.removeItem(DRAFT_KEY); } catch {}
   const banner = document.getElementById('draft-banner');
   if (banner) banner.remove();
  }
 
  function restoreDraft(){
   try {
-   const raw = localStorage.getItem(DRAFT_KEY);
+   const raw = sessionStorage.getItem(DRAFT_KEY);
    if (!raw) return;
    const data = JSON.parse(raw);
    if (!data) return;
@@ -81,13 +82,15 @@
   if (!banner) banner = document.getElementById('draft-banner');
   if (!banner) return;
   const ja = document.documentElement.lang === 'ja';
-  banner.innerHTML = `<span>${ja ? '前回の入力内容（下書き）を復元しました。' : 'Restored your previous draft.'}</span><button type="button" id="clear-draft-btn">${ja ? '下書きを消去' : 'Clear draft'}</button>`;
-  document.getElementById('clear-draft-btn')?.addEventListener('click', () => {
+  banner.innerHTML = `<span>${ja ? 'このタブでの入力内容を復元しました。' : 'Restored the draft from this tab.'}</span><button type="button" id="clear-draft-btn">${ja ? '下書きを消去' : 'Clear draft'}</button>`;
+  banner.querySelector('#clear-draft-btn')?.addEventListener('click', () => {
    form.elements.name.value = '';
    form.elements.email.value = '';
    form.elements.company.value = '';
    form.elements.message.value = '';
    clearDraft();
+   updateCharCount();
+   message.focus();
   });
  }
 
@@ -136,13 +139,15 @@
   if(!successCard){
    successCard = document.createElement('div');
    successCard.className = 'form-success-card';
+   successCard.tabIndex=-1;
+   successCard.setAttribute('role','status');
    form.parentNode.insertBefore(successCard, form);
   }
   const ja = document.documentElement.lang === 'ja';
   successCard.innerHTML = `
    <div class="success-icon" aria-hidden="true">✓</div>
    <h3>${ja ? 'ご相談を受け付けました' : 'Thank You for Reaching Out'}</h3>
-   <p>${ja ? 'お問い合わせありがとうございます。内容を確認のうえ、通常1〜2営業日以内にご連絡いたします。' : 'We have received your inquiry. We will review your details and respond within 1–2 business days.'}</p>
+   <p>${ja ? '送信サービスがご相談を受け付けました。内容を確認してご連絡します。' : 'The delivery service has accepted your inquiry. We will review it and get back to you.'}</p>
    <button class="btn small" type="button" id="reset-form-btn">${ja ? '新しい相談を送る' : 'Send another inquiry'}</button>
   `;
   successCard.style.display = 'block';
@@ -151,6 +156,7 @@
    form.style.display = 'block';
    state = '';
    render();
+   form.elements.name.focus();
   });
  }
 
@@ -159,7 +165,7 @@
   for(const option of service.options)option.textContent=option.dataset[ja?'ja':'en'];
   submit.textContent=busy?t('送信中…','Sending…'):direct?t('相談内容を送信する','Send your inquiry'):t('メールソフトで確認する','Review in mail app');
   document.getElementById('form-help').textContent=direct?t('入力内容を確認して送信してください。Wingscraft宛てにご相談をお送りします。','Review your details and submit your inquiry to Wingscraft.'):t('内容をまとめて、メールソフトで確認・送信できます。このページから直接送信はされません。','Prepare your inquiry here, then review and send it in your mail app. This page does not send the message itself.');
-  message.placeholder=t('3,000文字以内。\n希望する時期や予算があれば、\nあわせてご記入ください。','Up to 3,000 characters.\nInclude preferred timing or budget if you have them.');
+  message.placeholder=t('3,000文字以内。希望する時期や予算があれば、あわせてご記入ください。','Up to 3,000 characters. Include preferred timing or budget if you have them.');
   status.textContent=state?notices[state][ja?0:1]:'';
   status.dataset.state=state;
   updateDraftBannerText();
@@ -172,13 +178,13 @@
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(busy)return;for(const field of ['name','email','message'])form.elements[field].value=form.elements[field].value.trim();if(!form.reportValidity())return;
   if(form.elements._gotcha.value){setState('blocked');return;}
-  if(!direct){const url='mailto:wingscraft.studio@gmail.com?subject='+encodeURIComponent(t('Wingscraftへのお問い合わせ','Project inquiry — Wingscraft'))+'&body='+encodeURIComponent(bodyText());setState('mail');clearDraft();location.href=url;return;}
+  if(!direct){const url='mailto:wingscraft.studio@gmail.com?subject='+encodeURIComponent(t('Wingscraftへのお問い合わせ','Project inquiry — Wingscraft'))+'&body='+encodeURIComponent(bodyText());setState('mail');location.href=url;return;}
   const data=Object.fromEntries(new FormData(form));data._subject='Wingscraft — '+labels[service.value][1];data.language=document.documentElement.lang;if(example)data.reference=example;
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   lock(true);setState('sending');
   try{await window.WingscraftTransport.submit(endpoint,data,controller.signal);form.reset();clearDraft();setState('success');}
   catch(error){setState(error.message==='rate-limit'?'limited':error.message==='rejected'?'rejected':'uncertain');}
-  finally{clearTimeout(timeout);lock(false);status.focus({preventScroll:true});}
+  finally{clearTimeout(timeout);lock(false);(state==='success'?successCard:status).focus({preventScroll:true});}
  });
  document.getElementById('copy-message').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('To: wingscraft.studio@gmail.com\r\n\r\n'+bodyText());setState('copied')}catch{setState('copyFailed')}});
  document.addEventListener('wingscraft:language',render);

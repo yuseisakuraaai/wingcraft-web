@@ -18,6 +18,7 @@
  // --- Language switcher ---
  const setLanguage=lang=>{
   root.lang=lang;
+  document.getElementById('back-to-top')?.setAttribute('aria-label',lang==='ja'?'ページトップへ戻る':'Back to top');
   const nav=document.querySelector('nav');
   if(nav)nav.setAttribute('aria-label',lang==='en'?'Pages':'ページ');
   const meta=lang==='en'?(translations[page]||original):original;
@@ -63,7 +64,7 @@
    else backToTop.classList.remove('is-visible');
   },{passive:true});
   backToTop.addEventListener('click',()=>{
-   window.scrollTo({top:0,behavior:'smooth'});
+   window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
   });
  }
 
@@ -95,7 +96,7 @@
 
   const toast = document.createElement('span');
   toast.className = 'copy-toast';
-  toast.textContent = root.lang==='ja'?'コピーしました！':'Copied!';
+  toast.setAttribute('role','status');
   wrap.appendChild(btn);
   wrap.appendChild(toast);
 
@@ -106,9 +107,18 @@
     await navigator.clipboard.writeText('wingscraft.studio@gmail.com');
     toast.textContent = root.lang==='ja'?'コピーしました！':'Copied!';
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 1800);
-   } catch {}
+    setTimeout(() => {toast.classList.remove('show');toast.textContent='';}, 1800);
+   } catch {
+    toast.textContent=root.lang==='ja'?'コピーできませんでした。アドレスを選択してコピーしてください。':'Could not copy. Select and copy the address manually.';
+    toast.classList.add('show');
+   }
   });
+
+ });
+
+ document.addEventListener('wingscraft:language',()=>{
+  document.querySelectorAll('.copy-email-btn').forEach(btn=>{btn.setAttribute('aria-label',root.lang==='ja'?'メールアドレスをコピー':'Copy email address');btn.querySelector('span:last-child').textContent=root.lang==='ja'?'コピー':'Copy';});
+ });
 
  // --- Command Palette (Cmd+K / Ctrl+K) ---
  const paletteItems = [
@@ -150,12 +160,13 @@
     <div class="palette-head">
       <span aria-hidden="true">🔍</span>
       <input type="text" class="palette-search" id="palette-search" placeholder="${root.lang==='ja'?'ページやデモを検索…':'Search pages and studies…'}" autocomplete="off">
-      <span class="palette-esc">ESC</span>
+      <button type="button" class="palette-close" aria-label="Close search">×</button>
     </div>
     <ul class="palette-list" id="palette-list"></ul>
    `;
    document.body.appendChild(dialog);
    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+   dialog.querySelector('.palette-close').addEventListener('click',()=>dialog.close());
    const input = dialog.querySelector('#palette-search');
    input.addEventListener('input', () => renderPaletteList(input.value));
    input.addEventListener('keydown', handlePaletteKeydown);
@@ -167,6 +178,9 @@
   if (!dialog) return;
   const input = dialog.querySelector('#palette-search');
   input.placeholder = root.lang==='ja'?'ページやデモを検索…':'Search pages and studies…';
+  dialog.setAttribute('aria-label',root.lang==='ja'?'サイト内検索':'Site search');
+  input.setAttribute('aria-label',root.lang==='ja'?'ページを検索':'Search pages');
+  dialog.querySelector('.palette-close').setAttribute('aria-label',root.lang==='ja'?'検索を閉じる':'Close search');
   input.value = '';
   renderPaletteList('');
   if (typeof dialog.showModal === 'function') {
@@ -245,7 +259,7 @@
  // --- Service Worker Registration (PWA Offline Capability) ---
  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
   window.addEventListener('load', () => {
-   navigator.serviceWorker.register('/sw.js').catch(() => {});
+   navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).catch(() => {});
   });
  }
 
@@ -270,20 +284,6 @@
 
 // Local demonstrations. No network requests, storage or booking submission.
 (() => {
- const run=document.getElementById('run-demo');
- const status=document.getElementById('workflow-status');
- const rows=[...document.querySelectorAll('.demo-flow li')];
- let timer; let finished=false;
- const announce=()=>{if(status)status.textContent=finished?(document.documentElement.lang==='ja'?'デモ完了。内容の整理から通知までの流れを確認しました。':'Demo complete. Details organised and the notification step illustrated.'):'';};
- if(run)run.addEventListener('click',()=>{
-  clearTimeout(timer);finished=false;announce();rows.forEach(row=>row.classList.remove('active'));run.disabled=true;
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let index=0;
-  const advance=()=>{if(index<rows.length){rows[index++].classList.add('active');timer=setTimeout(advance,reduce?0:420);}else{finished=true;run.disabled=false;announce();}};
-  advance();
- });
- const langBtn=document.getElementById('lang');
- if(langBtn)langBtn.addEventListener('click',announce);
  document.querySelectorAll('input[name="demo-slot"]').forEach(input=>input.addEventListener('change',()=>{
   const selected=document.getElementById('selected-slot');
   if(selected)selected.textContent=input.value;
