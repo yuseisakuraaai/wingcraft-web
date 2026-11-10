@@ -195,7 +195,6 @@
   }
   syncServiceCards();
   submit.textContent=busy?t('送信中…','Sending…'):direct?t('相談内容を送信する','Send your inquiry'):t('メールソフトで確認する','Review in mail app');
-  document.getElementById('form-help').textContent=direct?t('入力内容を確認して送信してください。Wingscraft宛てにご相談をお送りします。','Review your details and submit your inquiry to Wingscraft.'):t('内容をまとめて、メールソフトで確認・送信できます。このページから直接送信はされません。','Prepare your inquiry here, then review and send it in your mail app. This page does not send the message itself.');
   message.placeholder=t('3,000文字以内。希望する時期や予算があれば、あわせてご記入ください。','Up to 3,000 characters. Include your preferred timing or budget, if any.');
   status.textContent=state?notices[state][ja?0:1]:'';
   status.dataset.state=state;

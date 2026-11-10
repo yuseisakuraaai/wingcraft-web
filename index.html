@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#10110f">
     <meta property="og:title" content="Wingscraft — 独立ソフトウェア開発スタジオ"><meta property="og:description" content="東京を拠点に、Webサイト・Webアプリ・業務の自動化を設計するWingscraft。構想から公開、その後の改善まで。"><meta property="og:type" content="website"><meta property="og:site_name" content="Wingscraft"><meta property="og:locale" content="ja_JP"><meta property="og:locale:alternate" content="en_US"><meta property="og:image" content="https://wingscraft.dev/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Wingscraft — Independent Software Studio"><meta property="og:url" content="https://wingscraft.dev/"><meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <script>'use strict';(()=>{let p;try{p=localStorage.getItem('wingscraft-language-choice')}catch{}const r=(navigator.languages&&navigator.languages[0])||navigator.language||'en';const a=/^ja(?:-|$)/i.test(r)?'ja':'en';document.documentElement.lang=p==='ja'||p==='en'?p:a})()</script><link rel="stylesheet" href="style.css?v=merge5">
+    <script>'use strict';(()=>{let p;try{p=localStorage.getItem('wingscraft-language-choice')}catch{}const r=(navigator.languages&&navigator.languages[0])||navigator.language||'en';const a=/^ja(?:-|$)/i.test(r)?'ja':'en';document.documentElement.lang=p==='ja'||p==='en'?p:a})()</script><link rel="stylesheet" href="style.css?v=merge6">
     <link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="canonical" href="https://wingscraft.dev/"><link rel="alternate" hreflang="ja" href="https://wingscraft.dev/"><link rel="alternate" hreflang="en" href="https://wingscraft.dev/"><link rel="alternate" hreflang="x-default" href="https://wingscraft.dev/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Wingscraft","description":"東京を拠点に、Webサイト・Webアプリ・業務の自動化を設計する独立ソフトウェア開発スタジオ","url":"https://wingscraft.dev","foundingDate":"2026-11-09","founder":[{"@type":"Person","name":"櫻井優誠"},{"@type":"Person","name":"Damlanur Dağhan"}],"areaServed":"JP","availableLanguage":["ja","en"],"address":{"@type":"PostalAddress","addressLocality":"Tokyo","addressCountry":"JP"},"email":"wingscraft.studio@gmail.com"}</script>
   </head>
   <body class="page-index">
@@ -187,7 +187,7 @@
               <span lang="en">Three disciplines.<br><span class="gold">One cohesive craft.</span></span>
             </h2>
           </div>
-          <p class="editorial-sub">
+          <p class="editorial-sub ja-nowrap-container">
             <span lang="ja">画面・図はサービス内容を伝えるためのデザイン例です。</span>
             <span lang="en">Interfaces and diagrams are illustrative design studies.</span>
           </p>
@@ -212,11 +212,6 @@
               </div>
               <h2><span lang="ja">Webサイト制作</span><span lang="en">Websites</span></h2>
               <p class=""><span lang="ja">魅力が伝わり、相談につながる。</span><span lang="en">A clear path from interest to inquiry.</span></p>
-              <div class="preview-tags" aria-hidden="true">
-                <span><span lang="ja">構成設計</span><span lang="en">Editorial Structure</span></span>
-                <span><span lang="ja">レスポンシブ</span><span lang="en">Responsive Craft</span></span>
-                <span><span lang="ja">日英対応</span><span lang="en">Bilingual Ready</span></span>
-              </div>
             </div>
             <div class="mini product-preview web-preview" aria-hidden="true">
               <div class="preview-toolbar">
@@ -312,8 +307,8 @@
           </div>
           <div class="split">
             <div class="split-narrative">
-              <h2><span lang="ja">相談が届いたら、<br>一覧にまとまる。</span><span lang="en">An inquiry arrives.<br>Your list updates.</span></h2>
-              <p class="lead"><span lang="ja">フォームの内容を対応リストへ自動転記し、繰り返す手入力を減らします。</span><span lang="en">Copy form details into an inquiry list automatically, reducing repeated data entry.</span></p>
+              <h2><span lang="ja">相談内容を整理して、<br>次の対応を明確に。</span><span lang="en">Turn an inquiry into<br>a clear next action.</span></h2>
+              <p class="lead"><span lang="ja">届いた文章から必要な情報を整理し、確認漏れや担当者への引き継ぎの手間を減らします。</span><span lang="en">Structure the important details and hand off a clear next action without repeated copying.</span></p>
               <a class="text-link" href="services.html#auto"><span lang="ja">自動化でできること</span><span lang="en">Explore automation</span></a>
             </div>
             <div class="workflow-demo" id="workflow-demo">
@@ -321,18 +316,26 @@
                 <span class="window-dots"><i></i><i></i><i></i></span>
                 <span class="window-title"><span lang="ja">WINGSCRAFT・問い合わせ整理</span><span lang="en">WINGSCRAFT · INQUIRY TRIAGE</span></span>
               </div>
-              <p class="eyebrow"><span lang="ja">操作デモ</span><span lang="en">Interactive example</span></p>
+              <p class="eyebrow"><span lang="ja">相談整理デモ</span><span lang="en">Inquiry triage demo</span></p>
               <div class="flow-before">
-                <p class="flow-label"><span lang="ja">届いた相談</span><span lang="en">Incoming inquiry</span></p>
-                <p class="flow-message"><span lang="ja">カフェのサイトを作りたい。来月公開できますか？</span><span lang="en">Can you build a café website for next month?</span></p>
+                <p class="flow-label"><span lang="ja">フォームに届いた相談</span><span lang="en">Incoming form response</span></p>
+                <div class="flow-message">
+                  <strong><span lang="ja">店舗サイトを新しくしたい</span><span lang="en">We need a new shop website</span></strong>
+                  <span><span lang="ja">メニューと店舗情報を掲載して、来月中に公開したいです。</span><span lang="en">We would like to publish our menu and shop details next month.</span></span>
+                </div>
               </div>
               <button class="btn small magnetic" id="run-demo" type="button"></button>
               <div id="workflow-result" hidden>
-                <p class="flow-label"><span lang="ja">対応リストに追加</span><span lang="en">Added to the inquiry list</span></p>
-                <div class="flow-record"><strong><span lang="ja">Webサイト制作</span><span lang="en">Website</span></strong><span><span lang="ja">来月公開希望</span><span lang="en">Target: next month</span></span><span class="flow-state"><span lang="ja">確認待ち</span><span lang="en">To review</span></span></div>
+                <p class="flow-label"><span lang="ja">自動で整理した結果</span><span lang="en">Structured result</span></p>
+                <div class="flow-record">
+                  <div><small><span lang="ja">相談の種類</span><span lang="en">Project type</span></small><strong><span lang="ja">店舗サイト制作</span><span lang="en">Shop website</span></strong></div>
+                  <div><small><span lang="ja">希望時期</span><span lang="en">Target</span></small><strong><span lang="ja">来月中</span><span lang="en">Next month</span></strong></div>
+                  <div><small><span lang="ja">確認事項</span><span lang="en">To confirm</span></small><strong><span lang="ja">ページ数・素材</span><span lang="en">Pages and assets</span></strong></div>
+                </div>
+                <div class="flow-next"><span class="flow-state"><span lang="ja">次の対応</span><span lang="en">Next action</span></span><strong><span lang="ja">担当者が制作範囲と公開日を確認して返信</span><span lang="en">Confirm scope and launch timing, then reply</span></strong></div>
               </div>
               <p class="demo-status" id="workflow-status" role="status" aria-live="polite"></p>
-              <p class="caption"><span lang="ja">サンプルです。実際の送信・保存はしません。</span><span lang="en">Sample only. Nothing is sent or saved.</span></p>
+              <p class="caption"><span lang="ja">整理と引き継ぎの流れを試すサンプルです。入力内容は送信・保存されません。</span><span lang="en">A sample of the triage and handoff flow. Nothing is sent or saved.</span></p>
             </div>
           </div>
         </div>
@@ -348,8 +351,8 @@
               <span lang="en">Thoughtful engineering,<br><span class="gold">every step of the way.</span></span>
             </h2>
           </div>
-          <p class="editorial-sub">
-            <span lang="ja">仕様書がなくても構いません。段階を確認しながら進めます。</span>
+          <p class="editorial-sub ja-nowrap-container">
+            <span lang="ja" class="ja-single-line">仕様書がなくても構いません。段階を確認しながら進めます。</span>
             <span lang="en">No finished specification required. We clarify and build step by step.</span>
           </p>
         </div>
@@ -553,6 +556,6 @@
         <span><span lang="ja">独立ソフトウェア開発スタジオ</span><span lang="en">Independent software development studio</span></span>
       </div>
     </footer>
-    <script src="site-config.js?v=078713b28d"></script><script defer src="script.js?v=merge5"></script><script defer src="motion.js?v=merge5"></script><script defer src="navigation.js?v=merge5"></script><button id="back-to-top" type="button" aria-label="ページトップへ戻る">↑</button><script defer src="workflow.js?v=merge5"></script>
+    <script src="site-config.js?v=078713b28d"></script><script defer src="script.js?v=merge6"></script><script defer src="motion.js?v=merge6"></script><script defer src="navigation.js?v=merge6"></script><button id="back-to-top" type="button" aria-label="ページトップへ戻る">↑</button><script defer src="workflow.js?v=merge6"></script>
   </body>
 </html>

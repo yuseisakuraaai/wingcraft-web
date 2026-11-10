@@ -8,10 +8,10 @@
 
  function render(){
   const ja=document.documentElement.lang==='ja';
-  run.textContent=state==='busy'?(ja?'追加しています…':'Adding…'):state==='done'?(ja?'もう一度試す':'Try again'):(ja?'自動転記を試す':'Try automatic entry');
+  run.textContent=state==='busy'?(ja?'整理しています…':'Structuring…'):state==='done'?(ja?'もう一度試す':'Try again'):(ja?'相談内容を整理する':'Structure this inquiry');
   run.disabled=state==='busy';
   result.hidden=state!=='done';
-  status.textContent=state==='done'?(ja?'1件追加しました。':'One inquiry added.'):'';
+  status.textContent=state==='done'?(ja?'確認事項と次の対応を整理しました。':'Key details and the next action are ready.'):'';
  }
 
  run.addEventListener('click',()=>{

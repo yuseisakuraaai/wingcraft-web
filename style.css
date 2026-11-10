@@ -5221,3 +5221,209 @@ html[lang=ja] .page-index .home-hero h1 {
     top: 28px;
   }
 }
+
+/* --- Requested refinements: clearer demos, balanced studies and Japanese line setting --- */
+.window-dots {
+  gap: 7px;
+}
+.window-dots i {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  color: #4c2b20;
+  box-shadow: inset 0 0 0 1px #00000012;
+}
+.window-dots i::after {
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  opacity: .62;
+}
+.window-dots i:nth-child(1) {
+  background: #ff5f57;
+}
+.window-dots i:nth-child(1)::after {
+  content: '×';
+}
+.window-dots i:nth-child(2) {
+  background: #febc2e;
+  color: #6b4b00;
+}
+.window-dots i:nth-child(2)::after {
+  content: '−';
+}
+.window-dots i:nth-child(3) {
+  background: #28c840;
+  color: #0f5f1a;
+}
+.window-dots i:nth-child(3)::after {
+  content: '+';
+}
+
+.ja-sentence-lines > span {
+  display: block;
+}
+@media (min-width: 1001px) {
+  html[lang='ja'] .ja-sentence-lines > span,
+  html[lang='ja'] .ja-single-line {
+    white-space: nowrap;
+  }
+  html[lang='ja'] .page-intro .lead:has(.ja-sentence-lines) {
+    max-width: none;
+  }
+  html[lang='ja'] .ja-nowrap-container {
+    max-width: none;
+  }
+}
+
+.page-index .workflow-demo .flow-message {
+  display: grid;
+  gap: 5px;
+}
+.page-index .workflow-demo .flow-message strong {
+  color: #252a21;
+  font-size: 15px;
+}
+.page-index .workflow-demo .flow-message > span {
+  color: #686e62;
+  font-size: 13px;
+}
+.page-index .workflow-demo .flow-record {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.page-index .workflow-demo .flow-record > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 16px;
+}
+.page-index .workflow-demo .flow-record > div + div {
+  border-left: 1px solid #d2dac8;
+}
+.page-index .workflow-demo .flow-record small {
+  color: #707768;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.page-index .workflow-demo .flow-record strong {
+  color: #283020;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.page-index .workflow-demo .flow-record strong span {
+  color: inherit;
+  font-size: inherit;
+}
+.flow-next {
+  display: grid;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 15px 17px;
+  border-radius: 16px;
+  background: #253021;
+  color: #f4f3ec;
+}
+.flow-next strong {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.flow-next .flow-state {
+  margin: 0;
+  background: #dce7cf;
+}
+.flow-next .flow-state span {
+  color: inherit;
+  font-size: inherit;
+}
+
+.study-grid {
+  align-items: stretch;
+}
+.study-card {
+  display: grid;
+  grid-template-rows: 255px minmax(0, 1fr);
+  min-width: 0;
+  height: 100%;
+}
+.study-visual {
+  height: auto;
+  min-width: 0;
+  overflow: hidden;
+}
+.study-window-bar > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.study-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.study-copy h2,
+html[lang='ja'] .study-copy h2 {
+  min-height: 2.5em;
+  font-size: clamp(19px, 1.55vw, 24px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.study-copy p {
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+.study-action {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.project-type-card {
+  min-height: 74px;
+  justify-content: center;
+}
+.pt-title {
+  margin: 0;
+}
+.page-contact .form-row-grid > div {
+  min-width: 0;
+}
+.page-contact select {
+  appearance: none;
+  padding-right: 46px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #626858 50%),
+    linear-gradient(135deg, #626858 50%, transparent 50%);
+  background-position:
+    calc(100% - 19px) 50%,
+    calc(100% - 14px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 760px) {
+  .page-index .workflow-demo .flow-record {
+    grid-template-columns: 1fr;
+  }
+  .page-index .workflow-demo .flow-record > div + div {
+    border-top: 1px solid #d2dac8;
+    border-left: 0;
+  }
+  .study-card {
+    grid-template-rows: 220px minmax(0, 1fr);
+  }
+  .study-copy h2,
+  html[lang='ja'] .study-copy h2 {
+    min-height: 0;
+    font-size: 23px;
+  }
+}
