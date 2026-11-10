@@ -28,7 +28,7 @@
   for(const option of service.options)option.textContent=option.dataset[ja?'ja':'en'];
   submit.textContent=busy?t('送信中…','Sending…'):direct?t('相談内容を送信する','Send your inquiry'):t('メールソフトで確認する','Review in mail app');
   document.getElementById('form-help').textContent=direct?t('入力内容を確認して送信してください。Wingscraft宛てにご相談をお送りします。','Review your details and submit your inquiry to Wingscraft.'):t('内容をまとめて、メールソフトで確認・送信できます。このページから直接送信はされません。','Prepare your inquiry here, then review and send it in your mail app. This page does not send the message itself.');
-  document.getElementById('form-privacy').textContent=direct?t('入力内容はFormspreeを経由して送信され、ご相談への対応と連絡に使用します。機密情報は入力しないでください。','Your details are sent through Formspree and used to respond to your inquiry. Please omit confidential information.'):t('入力内容はこのサイトに送信・保存されません。メールでお送りいただいた情報は、ご相談への対応と連絡に使用します。','Your entries are not sent to or stored by this website. Information you email us is used to respond to your inquiry.');
+  message.placeholder=t('3,000文字以内。\n希望する時期や予算があれば、\nあわせてご記入ください。','Up to 3,000 characters.\nInclude preferred timing or budget if you have them.');
   status.textContent=state?notices[state][ja?0:1]:'';
   status.dataset.state=state;
  }
