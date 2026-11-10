@@ -19,13 +19,13 @@
 <meta property="og:image:alt" content="Wingscraft — Independent Software Studio">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<script>'use strict';(()=>{let p;try{p=localStorage.getItem('wingscraft-language-choice')}catch{}const r=(navigator.languages&&navigator.languages[0])||navigator.language||'en';const a=/^ja(?:-|$)/i.test(r)?'ja':'en';document.documentElement.lang=p==='ja'||p==='en'?p:a})()</script>
+<script>'use strict';(()=>{let p;try{p=localStorage.getItem('wingscraft-language-choice')}catch{}const r=(navigator.languages&&navigator.languages[0])||navigator.language||'en';const a=/^ja(?:-|$)/i.test(r)?'ja':'en';document.documentElement.lang=p==='ja'||p==='en'?p:a;let t;try{t=localStorage.getItem('wingscraft-theme')}catch{}if(t==='light'||(!t&&window.matchMedia?.('(prefers-color-scheme: light)').matches)){document.documentElement.setAttribute('data-theme','light');}})()</script>
 <link rel="stylesheet" href="style.css?v=12">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
 <body class="page-404">
 <a class="skip" href="#main"><span lang="ja">本文へ移動</span><span lang="en">Skip to content</span></a>
-<header class="nav"><div class="bar"><a class="logo" href="index.html" aria-label="Wingscraft"><img src="assets/logo.svg" width="160" height="40" alt="Wingscraft" fetchpriority="high"></a><a class="mobile-contact" href="contact.html"><span lang="ja">相談する</span><span lang="en">Contact</span></a><button class="lang" id="lang" type="button"><span lang="ja">EN</span><span lang="en">JP</span></button><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="menu-icon" aria-hidden="true"></span><span class="menu-label"><span lang="ja">メニュー</span><span lang="en">Menu</span></span></button><nav id="primary-nav" aria-label="ページ / Pages"><a href="index.html"><span lang="ja">ホーム</span><span lang="en">Home</span></a><a href="services.html"><span lang="ja">サービス</span><span lang="en">Services</span></a><a href="examples.html"><span lang="ja">制作例</span><span lang="en">Work</span></a><a href="projects.html"><span lang="ja">プロダクト</span><span lang="en">Products</span></a><a href="about.html"><span lang="ja">スタジオ</span><span lang="en">Studio</span></a><a href="contact.html"><span lang="ja">相談する</span><span lang="en">Contact</span></a></nav></div></header>
+<header class="nav"><div class="bar"><a class="logo" href="index.html" aria-label="Wingscraft"><img src="assets/logo.svg" width="160" height="40" alt="Wingscraft" fetchpriority="high"></a><a class="mobile-contact" href="contact.html"><span lang="ja">相談する</span><span lang="en">Contact</span></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="テーマ切替">☀️</button><button class="lang" id="lang" type="button"><span lang="ja">EN</span><span lang="en">JP</span></button><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="menu-icon" aria-hidden="true"></span><span class="menu-label"><span lang="ja">メニュー</span><span lang="en">Menu</span></span></button><nav id="primary-nav" aria-label="ページ / Pages"><a href="index.html"><span lang="ja">ホーム</span><span lang="en">Home</span></a><a href="services.html"><span lang="ja">サービス</span><span lang="en">Services</span></a><a href="examples.html"><span lang="ja">制作例</span><span lang="en">Work</span></a><a href="projects.html"><span lang="ja">プロダクト</span><span lang="en">Products</span></a><a href="about.html"><span lang="ja">スタジオ</span><span lang="en">Studio</span></a><a href="contact.html"><span lang="ja">相談する</span><span lang="en">Contact</span></a></nav></div></header>
 <main id="main">
 <section class="page-intro wrap">
 <p class="eyebrow">404 NOT FOUND</p>
@@ -42,5 +42,5 @@
 <script defer src="script.js?v=12"></script>
 <script defer src="motion.js?v=12"></script>
 <script defer src="navigation.js?v=12"></script>
-</body>
+<button id="back-to-top" type="button" aria-label="ページトップへ戻る">↑</button></body>
 </html>
