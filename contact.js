@@ -8,7 +8,8 @@
  const labels={general:['まずは相談したい','Not sure yet'],web:['Webサイト制作','Website development'],automation:['業務の自動化','Workflow automation'],booking:['予約ツール開発','Booking tool development']};
  const params=new URLSearchParams(location.search);
  if(Object.hasOwn(labels,params.get('service'))) service.value=params.get('service');
- const example=params.get('example')==='sumi'?'Sumi Coffee':'';
+ const references={sumi:'Sumi Coffee',inquiries:'Inquiry desk',booking:'Booking desk'};
+ const example=Object.hasOwn(references,params.get('example'))?references[params.get('example')]:'';
  let state='',busy=false;
  const t=(ja,en)=>document.documentElement.lang==='ja'?ja:en;
  const notices={
@@ -47,6 +48,6 @@
  });
  document.getElementById('copy-message').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('To: wingscraft.studio@gmail.com\r\n\r\n'+bodyText());setState('copied')}catch{setState('copyFailed')}});
  document.addEventListener('wingscraft:language',render);
- if(example){const note=document.createElement('p');note.className='field-help reference-note';note.textContent=t('参考の制作例: Sumi Coffee','Reference concept: Sumi Coffee');service.after(note);document.addEventListener('wingscraft:language',()=>note.textContent=t('参考の制作例: Sumi Coffee','Reference concept: Sumi Coffee'));}
+ if(example){const note=document.createElement('p');note.className='field-help reference-note';note.textContent=t('参考の制作例: ','Reference concept: ')+example;service.after(note);document.addEventListener('wingscraft:language',()=>note.textContent=t('参考の制作例: ','Reference concept: ')+example);}
  render();
 })();
