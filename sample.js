@@ -1,6 +1,8 @@
 'use strict';
 (() => {
  const root=document.documentElement;
+ document.addEventListener('copy',event=>event.preventDefault());
+ document.addEventListener('cut',event=>event.preventDefault());
  const requestedLanguage=new URLSearchParams(location.search).get('lang');
  if(requestedLanguage==='ja'||requestedLanguage==='en'){root.lang=requestedLanguage;try{localStorage.setItem('wingscraft-language-choice',requestedLanguage)}catch{}}
  const status=document.getElementById('menu-status');

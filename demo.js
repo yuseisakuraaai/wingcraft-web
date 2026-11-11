@@ -1,6 +1,8 @@
 'use strict';
 (() => {
  const root=document.documentElement, kind=document.body.dataset.demo;
+ document.addEventListener('copy',event=>{if(!event.target.closest?.('input,textarea,select,[contenteditable="true"]'))event.preventDefault();});
+ document.addEventListener('cut',event=>{if(!event.target.closest?.('input,textarea,select,[contenteditable="true"]'))event.preventDefault();});
  const requestedLanguage=new URLSearchParams(location.search).get('lang');
  if(requestedLanguage==='ja'||requestedLanguage==='en'){root.lang=requestedLanguage;try{localStorage.setItem('wingscraft-language-choice',requestedLanguage)}catch{}}
  const content=document.getElementById('demo-content'), stats=document.getElementById('demo-stats'), feedback=document.getElementById('demo-feedback');
