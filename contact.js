@@ -33,7 +33,7 @@
  service.addEventListener('change', syncServiceCards);
  const references={sumi:'Sumi Coffee',inquiries:'Inquiry desk',booking:'Booking desk'};
  const example=Object.hasOwn(references,params.get('example'))?references[params.get('example')]:'';
- let state='',busy=false;
+ let state='',busy=false,submitScrollPosition=null;
  const t=(ja,en)=>document.documentElement.lang==='ja'?ja:en;
  const notices={
   sending:['送信しています。このままお待ちください。','Sending your inquiry. Please wait.'],
@@ -162,14 +162,22 @@
  // --- Thank You Card View ---
  let successCard = null;
  function showSuccessCard(){
+  const host=form.parentElement;
   if(!successCard){
    successCard = document.createElement('div');
    successCard.className = 'form-success-card';
    successCard.tabIndex=-1;
    successCard.setAttribute('role','status');
    successCard.setAttribute('aria-live','polite');
-   form.firstElementChild.after(successCard);
+   host.insertBefore(successCard,form);
   }
+  if(!form.hidden){
+   host.style.minHeight=`${Math.ceil(form.getBoundingClientRect().height)}px`;
+   form.hidden=true;
+   form.inert=true;
+   form.setAttribute('aria-hidden','true');
+  }
+  host.classList.add('form-success-host');
   const ja = document.documentElement.lang === 'ja';
   successCard.innerHTML = `
    <div class="success-icon" aria-hidden="true">✓</div>
@@ -180,6 +188,12 @@
   successCard.style.display = 'block';
   document.getElementById('reset-form-btn')?.addEventListener('click', () => {
    successCard.style.display = 'none';
+   form.hidden=false;
+   form.inert=false;
+   form.removeAttribute('aria-hidden');
+   host.classList.remove('form-success-host');
+   host.style.minHeight='';
+   submitScrollPosition=null;
    state = '';
    render();
    form.elements.name.focus({preventScroll:true});
@@ -203,6 +217,16 @@
   if(state === 'success') showSuccessCard();
  }
  function setState(value){state=value;render();}
+ function restoreSubmitPosition(){
+  if(!submitScrollPosition)return;
+  const position=submitScrollPosition;
+  const restore=()=>window.scrollTo({left:position.left,top:position.top,behavior:'instant'});
+  restore();
+  requestAnimationFrame(()=>{restore();requestAnimationFrame(restore)});
+ }
+ const captureSubmitPosition=()=>{submitScrollPosition={left:window.scrollX,top:window.scrollY}};
+ submit.addEventListener('pointerdown',captureSubmitPosition,{passive:true});
+ submit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' ')captureSubmitPosition()});
  function bodyText(){
   const ja=document.documentElement.lang==='ja';
   const data=new FormData(form);
@@ -222,33 +246,47 @@
  }
  function lock(value){busy=value;for(const field of form.querySelectorAll('input,textarea,select,button'))field.disabled=value;form.setAttribute('aria-busy',String(value));render();}
  form.addEventListener('submit',async event=>{
-  event.preventDefault();if(busy)return;for(const field of ['name','email','message'])form.elements[field].value=form.elements[field].value.trim();if(!form.reportValidity())return;
+  event.preventDefault();if(busy)return;if(!submitScrollPosition)captureSubmitPosition();for(const field of ['name','email','message'])form.elements[field].value=form.elements[field].value.trim();if(!form.reportValidity()){submitScrollPosition=null;return;}
   if(form.elements._gotcha.value){setState('blocked');return;}
   if(!direct){const url='mailto:wingscraft.studio@gmail.com?subject='+encodeURIComponent(t('Wingscraftへのお問い合わせ','Project inquiry — Wingscraft'))+'&body='+encodeURIComponent(bodyText());setState('mail');location.href=url;return;}
   const ja=document.documentElement.lang==='ja';
   const optionText=select=>select?.selectedOptions[0]?.dataset[ja?'ja':'en']||select?.selectedOptions[0]?.textContent||'';
   const timelineText=optionText(timeline);
   const budgetText=optionText(budget);
-  const data={
+  const data=ja?{
    _subject:`Wingscraft — ${labels[service.value][1]} — ${form.elements.name.value}`,
-   name:form.elements.name.value,
    email:form.elements.email.value,
-   business:form.elements.company.value||t('未記入','Not provided'),
-   project_type:labels[service.value][ja?0:1],
-   target_timeline:timelineText||t('未定・相談して決めたい','Flexible / Not decided yet'),
-   estimated_budget:budgetText||t('未定・相談して決めたい','Undecided / Discuss scope first'),
-   project_details:form.elements.message.value,
-   reference_demo:example||t('なし','None'),
-   submission_language:ja?'Japanese':'English',
-   source_page:location.href,
-   submitted_at:new Date().toISOString(),
+   'お名前':form.elements.name.value,
+   '事業名':form.elements.company.value||'未記入',
+   'ご相談の種類':labels[service.value][0],
+   '希望する時期':timelineText||'未定・相談して決めたい',
+   'ご予算の目安':budgetText||'未定・相談して決めたい',
+   'ご相談内容':form.elements.message.value,
+   '参考にした制作例':example||'なし',
+   '表示言語':'日本語',
+   '送信元ページ':location.href,
+   '送信日時':new Date().toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}),
+   _gotcha:form.elements._gotcha.value
+  }:{
+   _subject:`Wingscraft — ${labels[service.value][1]} — ${form.elements.name.value}`,
+   email:form.elements.email.value,
+   'Name':form.elements.name.value,
+   'Business':form.elements.company.value||'Not provided',
+   'Project type':labels[service.value][1],
+   'Target timeline':timelineText||'Flexible / Not decided yet',
+   'Estimated budget':budgetText||'Undecided / Discuss scope first',
+   'Project details':form.elements.message.value,
+   'Reference demo':example||'None',
+   'Display language':'English',
+   'Source page':location.href,
+   'Submitted at':new Date().toLocaleString('en-US',{timeZone:'Asia/Tokyo',timeZoneName:'short'}),
    _gotcha:form.elements._gotcha.value
   };
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   lock(true);setState('sending');
   try{await window.WingscraftTransport.submit(endpoint,data,controller.signal);form.reset();clearDraft();setState('success');}
   catch(error){setState(error.message==='rate-limit'?'limited':error.message==='rejected'?'rejected':'uncertain');}
-  finally{clearTimeout(timeout);lock(false);(state==='success'?successCard:status).focus({preventScroll:true});}
+  finally{clearTimeout(timeout);lock(false);(state==='success'?successCard:status).focus({preventScroll:true});if(state==='success')restoreSubmitPosition();}
  });
  document.getElementById('copy-message').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('To: wingscraft.studio@gmail.com\r\n\r\n'+bodyText());setState('copied')}catch{setState('copyFailed')}});
  document.addEventListener('wingscraft:language',render);
