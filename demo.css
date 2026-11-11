@@ -59,3 +59,8 @@ dialog{border-color:#d5ddd1;box-shadow:0 32px 120px #13200f3d}
 @media(max-width:700px){.demo-heading{padding-bottom:22px}.demo-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{min-width:0;padding:10px 12px}.panel{border-radius:18px}.demo-sidebar nav a{border-color:#d5ddd1;background:#f7f8f4}.demo-sidebar nav a[aria-current]{background:#fff}.nav-glyph{flex-basis:18px;width:18px;height:18px}.demo-brand img{width:112px}.demo-label{display:none}}
 @media(forced-colors:active){select{-webkit-appearance:auto;appearance:auto;background-image:none;padding-right:12px}}
 body{-webkit-user-select:none;user-select:none}input,textarea,select,[contenteditable=true]{-webkit-user-select:text;user-select:text}
+
+/* wing mark beside the wordmark (v1.0.3) */
+.demo-brand{gap:10px}
+.demo-brand img.logo-mark{display:block;width:44px;height:35px;flex:none}
+@media (max-width:640px){.demo-brand img.logo-mark{width:36px;height:29px}}

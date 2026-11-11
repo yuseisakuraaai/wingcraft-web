@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'wingscraft-merge28';
+const CACHE_NAME = 'wingscraft-merge30';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -17,7 +17,7 @@ const PRECACHE_ASSETS = [
   '/demo-booking.html',
   '/demo-inquiries.html',
   '/style.css?v=merge16',
-  '/layout.css?v=merge28',
+  '/layout.css?v=merge30',
   '/image-interactions.js?v=merge21',
   '/script.js?v=merge27',
   '/motion.js?v=merge8',
@@ -31,8 +31,13 @@ const PRECACHE_ASSETS = [
   '/site-config.js?v=078713b28d',
   '/site.webmanifest',
   '/assets/logo.svg',
-  '/assets/favicon.svg',
-  '/assets/apple-touch-icon.png',
+  '/assets/logo.svg?v=1.0.2',
+  '/assets/mark.svg',
+  '/assets/favicon.svg?v=1.0.2',
+  '/assets/favicon-32x32.png?v=1.0.2',
+  '/assets/apple-touch-icon.png?v=1.0.2',
+  '/assets/icon-192.png?v=1.0.2',
+  '/assets/icon-512.png?v=1.0.2',
   '/hero-animation.html',
   '/assets/hero-animation.css',
   '/assets/hero-animation.js',

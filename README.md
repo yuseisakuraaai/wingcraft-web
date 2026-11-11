@@ -1,6 +1,6 @@
 # Wingscraft — ファイル案内 / File Guide
 
-**リリース / Release: Version 1.0.1**
+**リリース / Release: Version 1.0.2**
 
 ## 日本語
 
@@ -66,7 +66,14 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 | `robots.txt` | クローラー向け設定 | Crawler instructions |
 | `_headers` | 対応ホスティング用のセキュリティ・キャッシュ設定 | Security and cache headers on supported hosting |
 | `assets/logo.svg` | ロゴ | Site wordmark |
-| `assets/favicon.svg` | ブラウザタブ用アイコン | Browser-tab icon |
-| `assets/apple-touch-icon.png` | ホーム画面用アイコン | Home-screen icon |
+| `assets/logo.svg` | ヘッダーとブラウザタブで共用するWingscraftロゴ | Wingscraft logo shared by the header and browser tabs |
+| `assets/favicon-32x32.png` | 小サイズ用ブラウザタブアイコン | Small browser-tab icon |
+| `assets/apple-touch-icon.png` | Apple端末のホーム画面用アイコン | Apple home-screen icon |
+| `assets/icon-192.png` / `assets/icon-512.png` | インストール表示用アイコン | Installable-site icons |
 | `assets/og.png` | リンク共有画像 | Social-sharing image |
 | `README.md` | このファイル | This file |
+
+## Logo mark
+
+- `assets/mark.svg`: illustrated mark (a pair of feathered wings around a globe), placed to the left of the wordmark in every header and footer (and the demo pages).
+- `assets/favicon.svg` and the PNG icons (`favicon-32x32`, `apple-touch-icon`, `icon-192`, `icon-512`) use the same mark on a dark badge.
