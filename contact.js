@@ -162,28 +162,27 @@
  // --- Thank You Card View ---
  let successCard = null;
  function showSuccessCard(){
-  form.style.display = 'none';
   if(!successCard){
    successCard = document.createElement('div');
    successCard.className = 'form-success-card';
    successCard.tabIndex=-1;
    successCard.setAttribute('role','status');
-   form.parentNode.insertBefore(successCard, form);
+   successCard.setAttribute('aria-live','polite');
+   form.firstElementChild.after(successCard);
   }
   const ja = document.documentElement.lang === 'ja';
   successCard.innerHTML = `
    <div class="success-icon" aria-hidden="true">✓</div>
-   <h3>${ja ? 'ご相談を受け付けました' : 'Thank You for Reaching Out'}</h3>
+   <h3>${ja ? '受け付けました' : 'Inquiry received'}</h3>
    <p>${ja ? '送信が完了しました。内容を確認のうえ、ご連絡します。' : 'Your inquiry has been sent. We will review it and get back to you.'}</p>
    <button class="btn small" type="button" id="reset-form-btn">${ja ? '新しい相談を送る' : 'Send another inquiry'}</button>
   `;
   successCard.style.display = 'block';
   document.getElementById('reset-form-btn')?.addEventListener('click', () => {
    successCard.style.display = 'none';
-   form.style.display = 'block';
    state = '';
    render();
-   form.elements.name.focus();
+   form.elements.name.focus({preventScroll:true});
   });
  }
 
@@ -196,8 +195,9 @@
   syncServiceCards();
   submit.textContent=busy?t('送信中…','Sending…'):direct?t('相談内容を送信する','Send your inquiry'):t('メールソフトを開く','Open mail app');
   message.placeholder=t('3,000文字以内。希望する時期や予算があれば、あわせてご記入ください。','Up to 3,000 characters. Include your preferred timing or budget, if any.');
-  status.textContent=state?notices[state][ja?0:1]:'';
+  status.textContent=state&&state!=='success'?notices[state][ja?0:1]:'';
   status.dataset.state=state;
+  if(successCard&&state!=='success')successCard.style.display='none';
   updateDraftBannerText();
   updateCharCount();
   if(state === 'success') showSuccessCard();
@@ -225,7 +225,25 @@
   event.preventDefault();if(busy)return;for(const field of ['name','email','message'])form.elements[field].value=form.elements[field].value.trim();if(!form.reportValidity())return;
   if(form.elements._gotcha.value){setState('blocked');return;}
   if(!direct){const url='mailto:wingscraft.studio@gmail.com?subject='+encodeURIComponent(t('Wingscraftへのお問い合わせ','Project inquiry — Wingscraft'))+'&body='+encodeURIComponent(bodyText());setState('mail');location.href=url;return;}
-  const data=Object.fromEntries(new FormData(form));data._subject='Wingscraft — '+labels[service.value][1];data.language=document.documentElement.lang;if(example)data.reference=example;
+  const ja=document.documentElement.lang==='ja';
+  const optionText=select=>select?.selectedOptions[0]?.dataset[ja?'ja':'en']||select?.selectedOptions[0]?.textContent||'';
+  const timelineText=optionText(timeline);
+  const budgetText=optionText(budget);
+  const data={
+   _subject:`Wingscraft — ${labels[service.value][1]} — ${form.elements.name.value}`,
+   name:form.elements.name.value,
+   email:form.elements.email.value,
+   business:form.elements.company.value||t('未記入','Not provided'),
+   project_type:labels[service.value][ja?0:1],
+   target_timeline:timelineText||t('未定・相談して決めたい','Flexible / Not decided yet'),
+   estimated_budget:budgetText||t('未定・相談して決めたい','Undecided / Discuss scope first'),
+   project_details:form.elements.message.value,
+   reference_demo:example||t('なし','None'),
+   submission_language:ja?'Japanese':'English',
+   source_page:location.href,
+   submitted_at:new Date().toISOString(),
+   _gotcha:form.elements._gotcha.value
+  };
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   lock(true);setState('sending');
   try{await window.WingscraftTransport.submit(endpoint,data,controller.signal);form.reset();clearDraft();setState('success');}
