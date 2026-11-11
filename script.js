@@ -1,6 +1,8 @@
 'use strict';
 (() => {
  const root=document.documentElement;
+ const requestedLanguage=new URLSearchParams(location.search).get('lang');
+ if(requestedLanguage==='ja'||requestedLanguage==='en')root.lang=requestedLanguage;
  const translations={
   index:['Home — Wingscraft','Independent software development in Tokyo. Websites, applications and workflow automation.'],
   about:['Studio — Wingscraft','An independent software studio in Tokyo. Founded 9 November 2026 by Sakurai Yusei and Damlanur Dağhan.'],
@@ -14,6 +16,35 @@
  };
  const original=[document.title,document.querySelector('meta[name=description]')?.content||''];
  const page=document.body.className.replace('page-','');
+
+ const syncLanguageURLs=lang=>{
+  const current=new URL(location.href);
+  current.searchParams.set('lang',lang);
+  history.replaceState(null,'',current);
+  document.querySelectorAll('a[href]').forEach(anchor=>{
+   const raw=anchor.getAttribute('href');
+   if(!raw||raw.startsWith('#')||raw.startsWith('mailto:')||raw.startsWith('tel:'))return;
+   const target=new URL(raw,location.href);
+   if(target.protocol!==location.protocol||(target.protocol!=='file:'&&target.origin!==location.origin))return;
+   if(!target.pathname.endsWith('.html')&&!target.pathname.endsWith('/'))return;
+   target.searchParams.set('lang',lang);
+   anchor.href=target.href;
+  });
+  const canonical=document.querySelector('link[rel="canonical"]');
+  const alternates=[...document.querySelectorAll('link[rel="alternate"][hreflang]')];
+  if(canonical){
+   const base=new URL(canonical.href);base.search='';
+   const localized=new URL(base);localized.searchParams.set('lang',lang);canonical.href=localized.href;
+   alternates.forEach(link=>{
+    const code=link.getAttribute('hreflang');
+    const url=new URL(base);
+    if(code==='ja'||code==='en')url.searchParams.set('lang',code);
+    link.href=url.href;
+   });
+   const ogURL=document.querySelector('meta[property="og:url"]');
+   if(ogURL)ogURL.content=localized.href;
+  }
+ };
 
  // --- Language switcher ---
  const setLanguage=lang=>{
@@ -35,6 +66,8 @@
   if(ogLocAlt)ogLocAlt.content=lang==='en'?'ja_JP':'en_US';
   const langBtn=document.getElementById('lang');
   if(langBtn)langBtn.setAttribute('aria-label',lang==='en'?'Switch to Japanese':'Switch to English');
+  document.getElementById('project-type-grid')?.setAttribute('aria-label',lang==='ja'?'ご相談の種類':'Project type');
+  syncLanguageURLs(lang);
  };
  setLanguage(root.lang==='ja'?'ja':'en');
 
@@ -161,7 +194,7 @@
  function renderPaletteList(query){
   const list=document.getElementById('palette-list'),ja=root.lang==='ja',q=query.toLowerCase().trim();if(!list)return;
   const rows=paletteItems.filter(item=>!q||[ja?item.ja:item.en,ja?item.catJa:item.catEn,item.url].some(value=>value.toLowerCase().includes(q)));
-  list.innerHTML=rows.length?rows.map((item,index)=>`<li class="palette-item ${index===0?'active':''}" data-url="${item.url}"><a href="${item.url}"><span class="palette-label">${ja?item.ja:item.en}</span><span class="palette-category">${ja?item.catJa:item.catEn}</span></a></li>`).join(''):`<li class="palette-empty">${ja?'一致する項目が見つかりません':'No matching results found'}</li>`;
+  list.innerHTML=rows.length?rows.map((item,index)=>{const url=`${item.url}?lang=${ja?'ja':'en'}`;return `<li class="palette-item ${index===0?'active':''}" data-url="${url}"><a href="${url}"><span class="palette-label">${ja?item.ja:item.en}</span><span class="palette-category">${ja?item.catJa:item.catEn}</span></a></li>`}).join(''):`<li class="palette-empty">${ja?'一致する項目が見つかりません':'No matching results found'}</li>`;
  }
 
  function handlePaletteKeydown(event){

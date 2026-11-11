@@ -142,7 +142,7 @@
 
  const templates = {
   ja: `【ご相談の背景・実現したいこと】\n（例：予約受付やお問い合わせを手作業で管理しているため、作業を減らしたいです。）\n\n【希望する時期・ご予算の目安】\n・希望時期：\n・予算の目安：\n\n【現在の状況・参考サイトなど】\n（現在のサイトやツールのURLなどがあればご記入ください）`,
-  en: `[Background & Goals]\n(e.g., We currently handle bookings/inquiries manually and would like to build a clearer system.)\n\n[Target Timing & Budget]\n- Target timeline:\n- Estimated budget:\n\n[Current Setup or Reference Links]\n(Please share any current websites or tools if available)`
+  en: `[Current process and required change]\n(e.g., We currently copy booking requests from email into a spreadsheet and want to reduce manual updates.)\n\n[Target timing and budget]\n- Target timeline:\n- Estimated budget:\n\n[Current website, tools, or reference links]\n(Include URLs if available.)`
  };
 
  if (templateBtn) {

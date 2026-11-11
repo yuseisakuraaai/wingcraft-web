@@ -1,6 +1,8 @@
 'use strict';
 (() => {
  const root=document.documentElement, kind=document.body.dataset.demo;
+ const requestedLanguage=new URLSearchParams(location.search).get('lang');
+ if(requestedLanguage==='ja'||requestedLanguage==='en'){root.lang=requestedLanguage;try{localStorage.setItem('wingscraft-language-choice',requestedLanguage)}catch{}}
  const content=document.getElementById('demo-content'), stats=document.getElementById('demo-stats'), feedback=document.getElementById('demo-feedback');
  const resetDialog=document.getElementById('reset-dialog'), dialog=document.getElementById('booking-dialog');
  const t=(ja,en)=>root.lang==='ja'?ja:en;
@@ -99,10 +101,12 @@
   document.getElementById('demo-language').setAttribute('aria-label',t('Switch to English','Switch to Japanese'));
   document.getElementById('back-to-top')?.setAttribute('aria-label',t('ページトップへ戻る','Back to top'));
   document.querySelector('nav').setAttribute('aria-label',t('デモ','Demos'));
+  document.querySelector('.workspace-logo')?.setAttribute('aria-label',t('Wingscraft ホーム','Wingscraft home'));
+  document.querySelectorAll('a[href]').forEach(anchor=>{const raw=anchor.getAttribute('href');if(!raw||raw.startsWith('#')||raw.startsWith('mailto:'))return;const url=new URL(raw,location.href);if(url.protocol!==location.protocol||(url.protocol!=='file:'&&url.origin!==location.origin))return;url.searchParams.set('lang',root.lang);anchor.href=url.href;});
   renderStats();if(kind==='inquiries')renderInquiries();else renderBookings();
   if(notice)feedback.textContent=pair(notice);renderUndo();
  }
- document.getElementById('demo-language').addEventListener('click',()=>{if(kind==='inquiries')captureInquiry();root.lang=root.lang==='ja'?'en':'ja';try{localStorage.setItem('wingscraft-language-choice',root.lang);}catch{}render();});
+ document.getElementById('demo-language').addEventListener('click',()=>{if(kind==='inquiries')captureInquiry();root.lang=root.lang==='ja'?'en':'ja';try{localStorage.setItem('wingscraft-language-choice',root.lang);}catch{}const url=new URL(location.href);url.searchParams.set('lang',root.lang);history.replaceState(null,'',url);render();});
  document.getElementById('reset-demo').addEventListener('click',()=>resetDialog.showModal());
  document.getElementById('reset-cancel').addEventListener('click',()=>resetDialog.close());
  document.getElementById('reset-confirm').addEventListener('click',()=>{seed();resetDialog.close();render();say('サンプルの初期状態に戻しました。','Original sample data restored.');document.getElementById('reset-demo').focus();});

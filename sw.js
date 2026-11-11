@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'wingscraft-merge8';
+const CACHE_NAME = 'wingscraft-merge9';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -16,16 +16,16 @@ const PRECACHE_ASSETS = [
   '/sample-coffee.html',
   '/demo-booking.html',
   '/demo-inquiries.html',
-  '/style.css?v=merge8',
-  '/script.js?v=merge8',
+  '/style.css?v=merge9',
+  '/script.js?v=merge9',
   '/motion.js?v=merge8',
   '/navigation.js?v=merge8',
-  '/contact.js?v=merge8',
+  '/contact.js?v=merge9',
   '/contact-transport.js?v=merge8',
-  '/demo.css',
-  '/demo.js?v=merge8',
+  '/demo.css?v=merge9',
+  '/demo.js?v=merge9',
   '/sample.css',
-  '/sample.js',
+  '/sample.js?v=merge9',
   '/site-config.js?v=078713b28d',
   '/site.webmanifest',
   '/assets/logo.svg',

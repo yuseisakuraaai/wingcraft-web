@@ -2595,12 +2595,6 @@ form:focus-within {
 .page-examples .closing {
     padding-block: 70px
 }
-.page-examples .closing .lead {
-    display: none
-}
-.page-examples .closing .btn {
-    margin-top: 30px
-}
 @media (max-width:1000px) {
     .study-grid {
         gap: 16px
@@ -4036,15 +4030,25 @@ html[lang=ja] .editorial-title {
 
 .window-dots {
   display: inline-flex;
-  gap: 5px;
+  gap: 8px;
   align-items: center;
 }
 .window-dots i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #343b3038;
   display: inline-block;
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px #00000016;
+}
+.window-dots i:nth-child(1) {
+  background: #ff5f57;
+}
+.window-dots i:nth-child(2) {
+  background: #febc2e;
+}
+.window-dots i:nth-child(3) {
+  background: #28c840;
 }
 .toolbar-brand {
   margin-right: auto;
@@ -5220,33 +5224,6 @@ html[lang=ja] .page-index .home-hero h1 {
   .journal-note summary::after {
     top: 28px;
   }
-}
-
-/* --- Requested refinements: clearer demos, balanced studies and Japanese line setting --- */
-.window-dots {
-  gap: 8px;
-}
-.window-dots i {
-  position: relative;
-  display: inline-block;
-  flex: 0 0 12px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1px #00000016;
-}
-.window-dots i::before,
-.window-dots i::after {
-  content: none;
-}
-.window-dots i:nth-child(1) {
-  background: #ff5f57;
-}
-.window-dots i:nth-child(2) {
-  background: #febc2e;
-}
-.window-dots i:nth-child(3) {
-  background: #28c840;
 }
 
 .ja-sentence-lines > span,

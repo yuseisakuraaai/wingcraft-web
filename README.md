@@ -6,8 +6,8 @@
 
 - 検索は **⌘K / Ctrl+K** で開き、Escapeまたは閉じるボタンで終了します。ヘッダーには検索欄を表示しません。
 - ノートは見出しを選ぶと本文が開きます。JavaScriptが無効でも読めます。
-- 日本語環境では日本語、それ以外では英語を初期表示します。一度手動で選んだ言語は次回以降も優先されます。
-- 問い合わせフォームはFormspreeに接続済みです。デモ画面は実際のメール送信や予約を行いません。
+- 日本語環境では日本語、それ以外では英語を初期表示します。言語切替後は`?lang=ja`または`?lang=en`をURLと内部リンクに保持します。
+- 問い合わせフォームはFormspreeに接続済みです。JavaScriptが無効でもFormspreeへ通常送信できます。デモ画面は実際のメール送信や予約を行いません。
 - 文章を変更する場合は、HTMLの日英両方と、関連するJavaScript内の日英文言を一緒に更新してください。
 - CSSやJavaScriptを更新した場合は、HTML内のURL末尾のバージョンと、`sw.js`のキャッシュ名・事前取得URLも更新してください。
 - 公開ドメインを変更する場合は、各HTMLのcanonical・OG・構造化データ、`robots.txt`、`sitemap.xml`も更新してください。
@@ -20,8 +20,8 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 
 - Search opens with **Command+K / Ctrl+K** and closes with Escape or the close button. No search field is shown in the header.
 - Select a note heading to read its body. The notes remain readable without JavaScript.
-- Japanese browsers default to Japanese; all others default to English. A manual language choice takes precedence on later visits.
-- The inquiry form is connected to Formspree. Demo screens do not send real messages or create real bookings.
+- Japanese browsers default to Japanese; all others default to English. Language switching keeps `?lang=ja` or `?lang=en` in the URL and internal links.
+- The inquiry form is connected to Formspree and retains a standard HTML submission when JavaScript is unavailable. Demo screens do not send real messages or create real bookings.
 - When editing copy, update both language spans in HTML and related strings in JavaScript.
 - When updating CSS or JavaScript, revise the asset query versions in HTML and the cache name and precache URLs in `sw.js` together.
 - A domain change also requires updates to canonical, OG and structured-data URLs in HTML, plus `robots.txt` and `sitemap.xml`.
