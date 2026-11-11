@@ -101,7 +101,6 @@
   document.getElementById('demo-language').setAttribute('aria-label',t('Switch to English','Switch to Japanese'));
   document.getElementById('back-to-top')?.setAttribute('aria-label',t('ページトップへ戻る','Back to top'));
   document.querySelector('nav').setAttribute('aria-label',t('デモ','Demos'));
-  document.querySelector('.workspace-logo')?.setAttribute('aria-label',t('Wingscraft ホーム','Wingscraft home'));
   document.querySelectorAll('a[href]').forEach(anchor=>{const raw=anchor.getAttribute('href');if(!raw||raw.startsWith('#')||raw.startsWith('mailto:'))return;const url=new URL(raw,location.href);if(url.protocol!==location.protocol||(url.protocol!=='file:'&&url.origin!==location.origin))return;url.searchParams.set('lang',root.lang);anchor.href=url.href;});
   renderStats();if(kind==='inquiries')renderInquiries();else renderBookings();
   if(notice)feedback.textContent=pair(notice);renderUndo();

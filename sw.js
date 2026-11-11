@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'wingscraft-merge9';
+const CACHE_NAME = 'wingscraft-merge10';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -22,8 +22,8 @@ const PRECACHE_ASSETS = [
   '/navigation.js?v=merge8',
   '/contact.js?v=merge9',
   '/contact-transport.js?v=merge8',
-  '/demo.css?v=merge9',
-  '/demo.js?v=merge9',
+  '/demo.css?v=merge10',
+  '/demo.js?v=merge10',
   '/sample.css',
   '/sample.js?v=merge9',
   '/site-config.js?v=078713b28d',
