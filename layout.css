@@ -1,4 +1,5 @@
 .nav .logo { -webkit-touch-callout:none; }
+footer .logo,.demo-brand {cursor:default}
 img,svg,picture,.image-link { -webkit-touch-callout:none; -webkit-user-drag:none; user-select:none; }
 .nav .logo img { pointer-events:none; -webkit-user-drag:none; user-select:none; }
 /* Screen composition: retain the desktop cards and illustrations in reading order. */
@@ -82,4 +83,50 @@ img,svg,picture,.image-link { -webkit-touch-callout:none; -webkit-user-drag:none
   .demo-shell main {padding:8mm 0!important}
   .sample-hero,.sample-visit {min-height:0!important;gap:8mm!important;padding-block:8mm!important}
   .sample-illustration {height:75mm!important}
+}
+
+/* Home hero animation — isolated replacement, preserving the current site. */
+.page-index .hero-craft-sculpture {
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+
+.page-index .hero-craft-sculpture .sculpture-card {
+  display: none;
+}
+
+.page-index .hero-workspace-frame {
+  display: block;
+  width: min(100%, 560px);
+  aspect-ratio: 1.1067 / 1;
+  height: auto;
+  border: 0;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  filter: drop-shadow(0 32px 58px rgba(0, 0, 0, 0.34));
+}
+
+@media (max-width: 760px) {
+  .page-index .hero-workspace-frame {
+    width: min(100%, 480px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-index .hero-workspace-frame {
+    filter: none;
+  }
+}
+
+@media print {
+  .page-index .hero-workspace-frame {
+    width: 100mm;
+    max-width: 100%;
+    filter: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 }

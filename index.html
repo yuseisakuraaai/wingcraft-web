@@ -10,7 +10,7 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <script>'use strict';(()=>{let p;try{p=localStorage.getItem('wingscraft-language-choice')}catch{}const q=new URLSearchParams(location.search).get('lang');const r=(navigator.languages&&navigator.languages[0])||navigator.language||'en';const a=/^ja(?:-|$)/i.test(r)?'ja':'en';document.documentElement.lang=q==='ja'||q==='en'?q:p==='ja'||p==='en'?p:a})()</script><link rel="stylesheet" href="style.css?v=merge16">
     <link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="canonical" href="https://wingscraft.dev/"><link rel="alternate" hreflang="ja" href="https://wingscraft.dev/"><link rel="alternate" hreflang="en" href="https://wingscraft.dev/"><link rel="alternate" hreflang="x-default" href="https://wingscraft.dev/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Wingscraft","description":"東京を拠点に、小規模事業者向けのWebサイト、業務自動化、予約ツールを制作する独立ソフトウェア開発スタジオ","url":"https://wingscraft.dev","foundingDate":"2026-11-09","founder":[{"@type":"Person","name":"櫻井優誠"},{"@type":"Person","name":"Damlanur Dağhan"}],"areaServed":"JP","availableLanguage":["ja","en"],"address":{"@type":"PostalAddress","addressLocality":"Tokyo","addressCountry":"JP"},"email":"wingscraft.studio@gmail.com"}</script>
-  <link rel="stylesheet" href="layout.css?v=merge21"></head>
+  <link rel="stylesheet" href="layout.css?v=merge25"></head>
   <body class="page-index">
     <a class="skip" href="#main"><span lang="ja">本文へ移動</span><span lang="en">Skip to content</span></a>
     <header class="nav">
@@ -55,6 +55,7 @@
 
           <!-- Symbolic Animated Hero Element: Code Brackets & Nodes -> Engineered Interface -->
           <div class="hero-craft-sculpture" id="hero-sculpture" aria-hidden="true">
+            <iframe class="hero-workspace-frame" src="hero-animation.html" title="装飾用の立体ワークスペースアニメーション" aria-hidden="true" tabindex="-1" loading="eager" sandbox="allow-scripts allow-same-origin"></iframe>
             <div class="sculpture-card">
               <div class="sculpture-header">
                 <span class="sculpture-tag"><span lang="ja">設計・画面・ロジック</span><span lang="en">ARCHITECTURE · UI · LOGIC</span></span>
@@ -536,7 +537,7 @@
     <footer>
       <div class="wrap footer-grid">
         <div>
-          <a class="logo" href="index.html"><img src="assets/logo.svg" width="160" height="40" alt="Wingscraft"></a>
+          <span class="logo"><img src="assets/logo.svg" width="160" height="40" alt="Wingscraft"></span>
           <p class=""><span lang="ja">小さな事業のための、Webとソフトウェア。</span><span lang="en">Websites and software for small businesses.</span></p>
         </div>
         <div>

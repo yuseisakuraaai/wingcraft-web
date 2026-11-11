@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'wingscraft-merge21';
+const CACHE_NAME = 'wingscraft-merge25';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -17,7 +17,7 @@ const PRECACHE_ASSETS = [
   '/demo-booking.html',
   '/demo-inquiries.html',
   '/style.css?v=merge16',
-  '/layout.css?v=merge21',
+  '/layout.css?v=merge25',
   '/image-interactions.js?v=merge21',
   '/script.js?v=merge20',
   '/motion.js?v=merge8',
@@ -33,6 +33,9 @@ const PRECACHE_ASSETS = [
   '/assets/logo.svg',
   '/assets/favicon.svg',
   '/assets/apple-touch-icon.png',
+  '/hero-animation.html',
+  '/assets/hero-animation.css',
+  '/assets/hero-animation.js',
   '/assets/og.png'
 ].map(path => new URL(path.slice(1), self.registration.scope).href);
 
