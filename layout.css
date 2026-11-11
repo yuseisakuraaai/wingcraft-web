@@ -1,4 +1,5 @@
 .nav .logo { -webkit-touch-callout:none; }
+img,svg,picture,.image-link { -webkit-touch-callout:none; -webkit-user-drag:none; user-select:none; }
 .nav .logo img { pointer-events:none; -webkit-user-drag:none; user-select:none; }
 /* Screen composition: retain the desktop cards and illustrations in reading order. */
 @media screen and (max-width:760px) {
