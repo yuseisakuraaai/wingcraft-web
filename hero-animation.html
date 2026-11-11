@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Hero Animation — Wingscraft</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/hero-animation.css?v=1">
+  <style>
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:transparent}
+    body{display:grid;place-items:center}
+    .hero-craft-sculpture{width:100%;height:100%;max-width:none;overflow:hidden;animation:none}
+    .obj-stage{width:100%;height:100vh!important;min-height:0;overflow:hidden}
+    .ws{--w:min(88vw,520px)!important}
+    .obj-caption{display:none}
+    @media(prefers-reduced-motion:reduce){.ws,.ws-mod,.ws-orbits,.ws-orb-node,.ws-ambient,.ws-core,.ws-core-cap,.ws-core-flare{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="hero-craft-sculpture" id="hero-sculpture" aria-hidden="true">
+    <div class="obj-stage"><div class="ws-scene"><div class="ws">
+      <div class="ws-ambient"></div>
+      <svg class="ws-orbits" viewBox="0 0 600 500" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="orbGrad1" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#dfc89f" stop-opacity=".12"/><stop offset="28%" stop-color="#f3dfc0" stop-opacity=".72"/><stop offset="70%" stop-color="#dfc89f" stop-opacity=".28"/><stop offset="100%" stop-color="#dfc89f" stop-opacity=".65"/></linearGradient>
+          <linearGradient id="orbGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#dfc89f" stop-opacity=".05"/><stop offset="50%" stop-color="#dfc89f" stop-opacity=".38"/><stop offset="100%" stop-color="#dfc89f" stop-opacity=".08"/></linearGradient>
+          <radialGradient id="nodeGlow"><stop offset="0%" stop-color="#fff9eb"/><stop offset="35%" stop-color="#ecd2a4" stop-opacity=".85"/><stop offset="100%" stop-color="#dfc89f" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="305" cy="215" rx="268" ry="86" transform="rotate(-11 305 215)" stroke="url(#orbGrad1)" stroke-width="1.15"/>
+        <ellipse cx="326" cy="348" rx="205" ry="56" transform="rotate(-4 326 348)" stroke="url(#orbGrad2)"/>
+        <line x1="252" y1="90" x2="252" y2="395" stroke="#dfc89f" stroke-opacity=".12" stroke-width=".8" stroke-dasharray="2 4"/>
+        <line x1="344" y1="160" x2="344" y2="420" stroke="#dfc89f" stroke-opacity=".14" stroke-width=".8"/>
+        <g class="ws-orb-node n-left"><circle cx="80" cy="274" r="14" fill="url(#nodeGlow)"/><circle cx="80" cy="274" r="3.2" fill="#fff8e8"/></g>
+        <g class="ws-orb-node n-top"><circle cx="384" cy="126" r="11" fill="url(#nodeGlow)"/><circle cx="384" cy="126" r="2.4" fill="#fff8e8"/></g>
+        <g class="ws-orb-node n-right"><circle cx="556" cy="196" r="14" fill="url(#nodeGlow)"/><circle cx="556" cy="196" r="3.2" fill="#fff8e8"/></g>
+      </svg>
+      <div class="ws-mod ws-editor">
+        <div class="ws-bar"><span class="ws-dots"><i></i><i></i><i></i></span></div>
+        <div class="ws-editor-body">
+          <div class="ws-editor-side"><span><i></i><b></b></span><span><i></i><b></b></span><span><i></i><b></b></span><span><i></i><b></b></span><span><i></i><b></b></span></div>
+          <div class="ws-editor-code"><b style="--w:42%" class="c-gold"></b><b style="--w:68%" class="in1 c-bright"></b><b style="--w:54%" class="in2 c-cream"></b><b style="--w:78%" class="in2 c-muted"></b><b style="--w:46%" class="in2 c-gold"></b><b style="--w:34%" class="in1 c-muted"></b><b style="--w:62%" class="in1 c-cream"></b><b style="--w:50%" class="in2 c-gold"></b><b style="--w:28%" class="in1 c-muted"></b><b style="--w:40%" class="c-dim"></b></div>
+        </div>
+      </div>
+      <div class="ws-mod ws-ghost"></div>
+      <div class="ws-mod ws-browser">
+        <div class="ws-bar"><span class="ws-dots"><i></i><i></i><i></i></span><span class="ws-bar-right"><i></i><i></i></span></div>
+        <div class="ws-browser-view"><svg class="ws-dune-svg" viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <radialGradient id="duneSky" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#3d3122" stop-opacity=".55"/><stop offset="60%" stop-color="#191714" stop-opacity=".85"/><stop offset="100%" stop-color="#10100e" stop-opacity=".96"/></radialGradient>
+            <linearGradient id="duneLit" x1="12%" y1="20%" x2="78%" y2="85%"><stop offset="0%" stop-color="#fae9cd"/><stop offset="28%" stop-color="#dfc496"/><stop offset="62%" stop-color="#9b7b4e"/><stop offset="100%" stop-color="#35291c"/></linearGradient>
+            <linearGradient id="duneShadow" x1="0%" y1="30%" x2="88%" y2="88%"><stop offset="0%" stop-color="#b89868"/><stop offset="28%" stop-color="#6b5233"/><stop offset="68%" stop-color="#2e2316"/><stop offset="100%" stop-color="#12100d"/></linearGradient>
+            <linearGradient id="duneBack" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ab8c5e" stop-opacity=".7"/><stop offset="50%" stop-color="#56432b" stop-opacity=".85"/><stop offset="100%" stop-color="#181511" stop-opacity=".95"/></linearGradient>
+            <linearGradient id="crestRim" x1="0%" y1="50%" x2="100%" y2="30%"><stop offset="0%" stop-color="#fff6e4" stop-opacity=".9"/><stop offset="55%" stop-color="#e8cda0" stop-opacity=".75"/><stop offset="100%" stop-color="#c4a26e" stop-opacity="0"/></linearGradient>
+          </defs>
+          <rect width="400" height="220" fill="url(#duneSky)"/><path d="M165 128C215 92 265 118 355 72L400 95V220H140Z" fill="url(#duneBack)"/><path d="M-10 198C45 162 118 96 176 98C222 100 268 122 355 72L240 220H-10Z" fill="url(#duneLit)"/><path d="M176 98C214 102 245 132 355 72L400 112V220H108C145 172 162 122 176 98Z" fill="url(#duneShadow)"/><path d="M-10 206C95 168 195 148 335 122L400 140V220H-10Z" fill="#171410" fill-opacity=".68"/><path d="M4 192C62 154 122 96 176 98C222 100 272 118 355 72" stroke="url(#crestRim)" stroke-width="2.2" fill="none"/>
+        </svg></div>
+      </div>
+      <div class="ws-mod ws-phone"><div class="ws-phone-screen">
+        <div class="ws-phone-top"><span class="ws-dots"><i></i><i></i></span><span class="ws-phone-pill"></span></div>
+        <div class="ws-phone-art"><svg viewBox="0 0 160 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0 88C28 64 62 36 94 40C118 42 138 52 160 32V110H0Z" fill="url(#duneLit)"/><path d="M94 40C112 44 132 58 160 32V110H62C78 82 86 56 94 40Z" fill="url(#duneShadow)"/><path d="M2 86C32 62 64 36 94 40C118 42 138 50 160 32" stroke="url(#crestRim)" stroke-width="1.6" fill="none"/></svg><div class="ws-phone-pager"><i></i><i></i></div></div>
+        <div class="ws-phone-lines"><b style="--w:64%"></b><b style="--w:82%"></b><b style="--w:48%" class="muted"></b></div><div class="ws-phone-foot"></div>
+      </div></div>
+      <div class="ws-core"><svg class="ws-core-svg" viewBox="0 0 360 210" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="pedTop" x2="100%" y2="100%"><stop stop-color="#2c261e" stop-opacity=".88"/><stop offset="50%" stop-color="#1d1a16" stop-opacity=".92"/><stop offset="100%" stop-color="#29231b" stop-opacity=".88"/></linearGradient>
+          <linearGradient id="pedLeft" x2="100%" y2="100%"><stop stop-color="#221e18"/><stop offset="100%" stop-color="#3d3224"/></linearGradient>
+          <linearGradient id="pedRight" x2="100%" y2="100%"><stop stop-color="#382d20"/><stop offset="100%" stop-color="#141210"/></linearGradient>
+          <linearGradient id="coreTop" x1="20%" y2="100%"><stop stop-color="#7c6545" stop-opacity=".72"/><stop offset="65%" stop-color="#d8b989" stop-opacity=".88"/><stop offset="100%" stop-color="#fff0d1" stop-opacity=".96"/></linearGradient>
+          <linearGradient id="coreLeft" y1="20%" x2="100%" y2="80%"><stop stop-color="#6e5739" stop-opacity=".78"/><stop offset="65%" stop-color="#cfa972" stop-opacity=".92"/><stop offset="100%" stop-color="#fff5de"/></linearGradient>
+          <linearGradient id="coreRight" y1="50%" x2="100%" y2="50%"><stop stop-color="#fff3d6" stop-opacity=".98"/><stop offset="40%" stop-color="#be9963" stop-opacity=".88"/><stop offset="100%" stop-color="#4e3d28" stop-opacity=".75"/></linearGradient>
+          <linearGradient id="capGlass" x2="100%" y2="100%"><stop stop-color="#fff" stop-opacity=".06"/><stop offset="60%" stop-color="#dfc89f" stop-opacity=".18"/><stop offset="100%" stop-color="#fff0d2" stop-opacity=".38"/></linearGradient>
+          <radialGradient id="vertexBloom"><stop stop-color="#fffdf7"/><stop offset="18%" stop-color="#ffe7be" stop-opacity=".92"/><stop offset="48%" stop-color="#d9b478" stop-opacity=".42"/><stop offset="100%" stop-color="#d9b478" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="180" cy="148" rx="146" ry="36" stroke="#dfc89f" stroke-opacity=".24" stroke-width=".9"/><ellipse cx="180" cy="148" rx="108" ry="26" stroke="#dfc89f" stroke-opacity=".14" stroke-width=".7" stroke-dasharray="3 5"/><line x1="65" y1="126" x2="295" y2="170" stroke="#dfc89f" stroke-opacity=".15"/><line x1="65" y1="170" x2="295" y2="126" stroke="#dfc89f" stroke-opacity=".15"/><ellipse cx="180" cy="142" rx="76" ry="24" fill="url(#vertexBloom)" opacity=".55"/>
+        <polygon points="180,82 268,108 180,136 92,108" fill="url(#pedTop)" stroke="#dfc89f" stroke-opacity=".42"/><polygon points="92,108 180,136 180,164 92,136" fill="url(#pedLeft)" stroke="#dfc89f" stroke-opacity=".3"/><polygon points="180,136 268,108 268,136 180,164" fill="url(#pedRight)" stroke="#dfc89f" stroke-opacity=".25"/>
+        <g class="ws-core-prism"><polygon points="180,58 232,74 180,92 128,74" fill="url(#coreTop)" stroke="#fce8c3" stroke-opacity=".65"/><polygon points="128,74 180,92 180,122 128,104" fill="url(#coreLeft)" stroke="#ffeac7" stroke-opacity=".6"/><polygon points="180,92 232,74 232,104 180,122" fill="url(#coreRight)" stroke="#ffeac7" stroke-opacity=".5"/><line x1="180" y1="68" x2="180" y2="178" stroke="#fff7e6" stroke-opacity=".85" stroke-width="1.6"/></g>
+        <g class="ws-core-cap"><polygon points="180,38 246,58 180,78 114,58" fill="url(#capGlass)" stroke="#f5dfc0" stroke-opacity=".62"/><polygon points="114,58 180,78 246,58 246,61 180,81 114,61" fill="#dfc89f" fill-opacity=".24"/></g>
+        <circle class="ws-core-flare f1" cx="180" cy="122" r="36" fill="url(#vertexBloom)"/><circle class="ws-core-flare f2" cx="180" cy="92" r="28" fill="url(#vertexBloom)"/><ellipse cx="180" cy="122" rx="18" ry="3.5" fill="#fffaf0" opacity=".85"/>
+      </svg></div>
+    </div></div></div>
+  </div>
+  <script src="assets/hero-animation.js?v=1"></script>
+</body>
+</html>
