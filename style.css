@@ -5487,36 +5487,33 @@ html[lang='ja'] .study-copy h2 {
 }
 
 .page-contact .form-success-card {
-  display: grid;
-  grid-template-columns: auto minmax(0,1fr) auto;
-  align-items: center;
-  gap: 8px 18px;
-  margin: 22px 0 28px;
-  padding: 22px;
-  text-align: left;
-  border-radius: 18px;
+  display: block;
+  min-height: 360px;
+  margin: 0;
+  padding: clamp(48px,7vw,76px) clamp(24px,5vw,54px);
+  text-align: center;
+  border-radius: 24px;
+  scroll-margin-top: 140px;
 }
 .page-contact .form-success-card .success-icon {
-  grid-row: 1 / 3;
-  width: 46px;
-  height: 46px;
-  margin: 0;
-  font-size: 20px;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  font-size: 26px;
 }
 .page-contact .form-success-card h3 {
-  margin: 0;
-  font-size: 20px;
+  margin: 0 0 14px;
+  font-size: 26px;
 }
 .page-contact .form-success-card p {
-  grid-column: 2;
-  max-width: none;
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
+  max-width: 440px;
+  margin: 0 auto 28px;
+  font-size: 15px;
+  line-height: 1.8;
 }
 .page-contact .form-success-card .btn {
-  grid-column: 3;
-  grid-row: 1 / 3;
+  display: inline-flex;
+  width: auto;
   white-space: nowrap;
 }
 .page-contact form[hidden] {
@@ -5691,17 +5688,15 @@ html[lang='ja'] .study-copy h2 {
     font-size: 16px;
   }
   .page-contact .form-success-card {
-    grid-template-columns: auto 1fr;
-    padding: 18px;
+    min-height: 320px;
+    padding: 44px 22px;
   }
   .page-contact .form-success-card .success-icon {
-    grid-row: 1 / 3;
+    margin-inline: auto;
   }
   .page-contact .form-success-card .btn {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    width: 100%;
-    margin-top: 8px;
+    width: auto;
+    margin-top: 0;
   }
   .footer-grid {
     grid-template-columns: 1fr;

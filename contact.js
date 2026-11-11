@@ -33,7 +33,13 @@
  service.addEventListener('change', syncServiceCards);
  const references={sumi:'Sumi Coffee',inquiries:'Inquiry desk',booking:'Booking desk'};
  const example=Object.hasOwn(references,params.get('example'))?references[params.get('example')]:'';
- let state='',busy=false,submitScrollPosition=null;
+ const SUCCESS_KEY='wingscraft-contact-sent';
+ const successRequested=params.get('sent')==='1';
+ let successConfirmed=false;
+ try{successConfirmed=sessionStorage.getItem(SUCCESS_KEY)==='1'}catch{}
+ const successPage=successRequested&&successConfirmed;
+ if(successPage&&'scrollRestoration' in history)history.scrollRestoration='manual';
+ let state='',busy=false;
  const t=(ja,en)=>document.documentElement.lang==='ja'?ja:en;
  const notices={
   sending:['送信しています。このままお待ちください。','Sending your inquiry. Please wait.'],
@@ -165,39 +171,43 @@
   const host=form.parentElement;
   if(!successCard){
    successCard = document.createElement('div');
+   successCard.id='contact-success';
    successCard.className = 'form-success-card';
    successCard.tabIndex=-1;
    successCard.setAttribute('role','status');
    successCard.setAttribute('aria-live','polite');
    host.insertBefore(successCard,form);
   }
-  if(!form.hidden){
-   host.style.minHeight=`${Math.ceil(form.getBoundingClientRect().height)}px`;
-   form.hidden=true;
-   form.inert=true;
-   form.setAttribute('aria-hidden','true');
-  }
+  form.hidden=true;
+  form.inert=true;
+  form.setAttribute('aria-hidden','true');
   host.classList.add('form-success-host');
+  document.body.classList.add('contact-sent');
   const ja = document.documentElement.lang === 'ja';
   successCard.innerHTML = `
    <div class="success-icon" aria-hidden="true">✓</div>
-   <h3>${ja ? '受け付けました' : 'Inquiry received'}</h3>
+   <h3>${ja ? 'ご相談を受け付けました' : 'Thank you for reaching out'}</h3>
    <p>${ja ? '送信が完了しました。内容を確認のうえ、ご連絡します。' : 'Your inquiry has been sent. We will review it and get back to you.'}</p>
    <button class="btn small" type="button" id="reset-form-btn">${ja ? '新しい相談を送る' : 'Send another inquiry'}</button>
   `;
   successCard.style.display = 'block';
   document.getElementById('reset-form-btn')?.addEventListener('click', () => {
-   successCard.style.display = 'none';
-   form.hidden=false;
-   form.inert=false;
-   form.removeAttribute('aria-hidden');
-   host.classList.remove('form-success-host');
-   host.style.minHeight='';
-   submitScrollPosition=null;
-   state = '';
-   render();
-   form.elements.name.focus({preventScroll:true});
+   try{sessionStorage.removeItem(SUCCESS_KEY)}catch{}
+   const url=new URL(location.href);
+   url.searchParams.delete('sent');
+   url.hash='contact-form';
+   location.replace(url);
   });
+ }
+
+ function openSuccessPage(){
+  try{sessionStorage.setItem(SUCCESS_KEY,'1')}catch{}
+  const url=new URL(location.href);
+  url.searchParams.delete('service');
+  url.searchParams.delete('example');
+  url.searchParams.set('sent','1');
+  url.hash='contact-success';
+  location.replace(url);
  }
 
  function render(){
@@ -217,16 +227,6 @@
   if(state === 'success') showSuccessCard();
  }
  function setState(value){state=value;render();}
- function restoreSubmitPosition(){
-  if(!submitScrollPosition)return;
-  const position=submitScrollPosition;
-  const restore=()=>window.scrollTo({left:position.left,top:position.top,behavior:'instant'});
-  restore();
-  requestAnimationFrame(()=>{restore();requestAnimationFrame(restore)});
- }
- const captureSubmitPosition=()=>{submitScrollPosition={left:window.scrollX,top:window.scrollY}};
- submit.addEventListener('pointerdown',captureSubmitPosition,{passive:true});
- submit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' ')captureSubmitPosition()});
  function bodyText(){
   const ja=document.documentElement.lang==='ja';
   const data=new FormData(form);
@@ -246,7 +246,7 @@
  }
  function lock(value){busy=value;for(const field of form.querySelectorAll('input,textarea,select,button'))field.disabled=value;form.setAttribute('aria-busy',String(value));render();}
  form.addEventListener('submit',async event=>{
-  event.preventDefault();if(busy)return;if(!submitScrollPosition)captureSubmitPosition();for(const field of ['name','email','message'])form.elements[field].value=form.elements[field].value.trim();if(!form.reportValidity()){submitScrollPosition=null;return;}
+  event.preventDefault();if(busy)return;for(const field of ['name','email','message'])form.elements[field].value=form.elements[field].value.trim();if(!form.reportValidity())return;
   if(form.elements._gotcha.value){setState('blocked');return;}
   if(!direct){const url='mailto:wingscraft.studio@gmail.com?subject='+encodeURIComponent(t('Wingscraftへのお問い合わせ','Project inquiry — Wingscraft'))+'&body='+encodeURIComponent(bodyText());setState('mail');location.href=url;return;}
   const ja=document.documentElement.lang==='ja';
@@ -284,13 +284,26 @@
   };
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   lock(true);setState('sending');
-  try{await window.WingscraftTransport.submit(endpoint,data,controller.signal);form.reset();clearDraft();setState('success');}
+  let navigating=false;
+  try{await window.WingscraftTransport.submit(endpoint,data,controller.signal);form.reset();clearDraft();navigating=true;openSuccessPage();}
   catch(error){setState(error.message==='rate-limit'?'limited':error.message==='rejected'?'rejected':'uncertain');}
-  finally{clearTimeout(timeout);lock(false);(state==='success'?successCard:status).focus({preventScroll:true});if(state==='success')restoreSubmitPosition();}
+  finally{clearTimeout(timeout);if(!navigating){lock(false);status.focus({preventScroll:true});}}
  });
  document.getElementById('copy-message').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('To: wingscraft.studio@gmail.com\r\n\r\n'+bodyText());setState('copied')}catch{setState('copyFailed')}});
  document.addEventListener('wingscraft:language',render);
  if(example){const note=document.createElement('p');note.className='field-help reference-note';note.textContent=t('参考にした制作例: ','Reference concept: ')+example;service.after(note);document.addEventListener('wingscraft:language',()=>note.textContent=t('参考にした制作例: ','Reference concept: ')+example);}
- restoreDraft();
- render();
+ if(successPage){
+  state='success';
+  render();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>successCard?.scrollIntoView({block:'center',behavior:'instant'})));
+ }else{
+  if(successRequested){
+   const url=new URL(location.href);
+   url.searchParams.delete('sent');
+   url.hash='contact-form';
+   history.replaceState(null,'',url);
+  }
+  restoreDraft();
+  render();
+ }
 })();
