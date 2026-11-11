@@ -16,7 +16,7 @@ const PRECACHE_ASSETS = [
   '/sample-coffee.html',
   '/demo-booking.html',
   '/demo-inquiries.html',
-  '/style.css?v=merge9',
+  '/style.css?v=merge10',
   '/script.js?v=merge9',
   '/motion.js?v=merge8',
   '/navigation.js?v=merge8',

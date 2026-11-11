@@ -3184,6 +3184,30 @@ form:focus-within {
     max-width: 760px;
     line-height: 1.8
 }
+.pricing-terms {
+    max-width: 82ch;
+    margin: 24px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.75;
+    letter-spacing: .01em
+}
+.pricing-terms [lang] > span {
+    display: block
+}
+.pricing-terms [lang] > span + span {
+    margin-top: 2px
+}
+@media (max-width: 600px) {
+    .pricing-terms {
+        max-width: none;
+        padding-top: 16px;
+        font-size: 11.5px;
+        line-height: 1.7
+    }
+}
 .founder-grid {
     display: grid;
     grid-template-columns: repeat(2,minmax(0,1fr));
