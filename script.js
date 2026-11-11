@@ -1,6 +1,13 @@
 'use strict';
 (() => {
  const root=document.documentElement;
+ // Keep normal link activation while suppressing image menus and dragging.
+ document.querySelectorAll('.nav .logo').forEach(logo=>{
+  logo.addEventListener('contextmenu',event=>event.preventDefault());
+  logo.addEventListener('dragstart',event=>event.preventDefault());
+  logo.setAttribute('draggable','false');
+  logo.querySelectorAll('img').forEach(img=>img.setAttribute('draggable','false'));
+ });
  document.addEventListener('copy',event=>{if(!event.target.closest?.('input,textarea,select,[contenteditable="true"]'))event.preventDefault();});
  document.addEventListener('cut',event=>{if(!event.target.closest?.('input,textarea,select,[contenteditable="true"]'))event.preventDefault();});
  const requestedLanguage=new URLSearchParams(location.search).get('lang');
