@@ -37,11 +37,11 @@
  const t=(ja,en)=>document.documentElement.lang==='ja'?ja:en;
  const notices={
   sending:['送信しています。このままお待ちください。','Sending your inquiry. Please wait.'],
-  success:['送信サービスがご相談を受け付けました。内容を確認してご連絡します。','The delivery service has accepted your inquiry. We will review it and get back to you.'],
+  success:['送信が完了しました。内容を確認のうえ、ご連絡します。','Your inquiry has been sent. We will review it and get back to you.'],
   rejected:['送信できませんでした。入力内容は残っています。内容を確認して再度お試しいただくか、メールでご連絡ください。','The inquiry could not be submitted. Your entries are still here. Review them and try again, or email us directly.'],
   uncertain:['送信結果を確認できませんでした。入力内容は残っています。重複送信を避けるため、再送の前に時間をおくか、メールでお問い合わせください。','We could not confirm the result. Your entries are still here. To avoid duplicates, wait before trying again or contact us by email.'],
   limited:['送信回数の制限に達しました。少し時間をおいてお試しいただくか、メールでご連絡ください。','The submission limit was reached. Please wait before trying again, or email us directly.'],
-  mail:['メールソフトへの引き渡しを試みました。まだ送信されていません。開いた画面で確認して送信してください。開かない場合は、内容をコピーしてメールに貼り付けられます。','We attempted to open your mail app. Nothing has been sent. Review and send the email there. If no app opens, copy the message and paste it into an email.'],
+  mail:['メールソフトを開きました。まだ送信されていません。内容を確認し、メールソフトから送信してください。画面が開かない場合は、内容をコピーしてメールに貼り付けられます。','We opened your mail app. Nothing has been sent. Review and send the email there. If no app opens, copy the message and paste it into an email.'],
   copied:['内容をコピーしました。メールに貼り付けて送信できます。','Copied. Paste the message into an email to send it.'],
   copyFailed:['自動コピーできませんでした。入力内容を手動でコピーしてください。','Automatic copying was unavailable. Please copy the entries manually.'],
   blocked:['送信を開始できませんでした。ページを再読み込みするか、メールでご連絡ください。','The submission could not start. Reload the page or contact us by email.']
@@ -109,7 +109,7 @@
   if (!banner) banner = document.getElementById('draft-banner');
   if (!banner) return;
   const ja = document.documentElement.lang === 'ja';
-  banner.innerHTML = `<span>${ja ? 'このタブでの入力内容を復元しました。' : 'Restored the draft from this tab.'}</span><button type="button" id="clear-draft-btn">${ja ? '下書きを消去' : 'Clear draft'}</button>`;
+  banner.innerHTML = `<span>${ja ? 'このタブに保存されていた入力内容を復元しました。' : 'Restored the draft from this tab.'}</span><button type="button" id="clear-draft-btn">${ja ? '下書きを消去' : 'Clear draft'}</button>`;
   banner.querySelector('#clear-draft-btn')?.addEventListener('click', () => {
    form.elements.name.value = '';
    form.elements.email.value = '';
@@ -141,7 +141,7 @@
  message.addEventListener('input', updateCharCount);
 
  const templates = {
-  ja: `【ご相談の背景・実現したいこと】\n（例：現在、予約受付や問い合わせの管理を手作業で行っており、改善したいと考えています。）\n\n【希望する時期・ご予算の目安】\n・希望時期：\n・予算感：\n\n【現在の状況・参考サイトなど】\n（現在のサイトやツールのURLなどがあればご記入ください）`,
+  ja: `【ご相談の背景・実現したいこと】\n（例：予約受付やお問い合わせを手作業で管理しているため、作業を減らしたいです。）\n\n【希望する時期・ご予算の目安】\n・希望時期：\n・予算の目安：\n\n【現在の状況・参考サイトなど】\n（現在のサイトやツールのURLなどがあればご記入ください）`,
   en: `[Background & Goals]\n(e.g., We currently handle bookings/inquiries manually and would like to build a clearer system.)\n\n[Target Timing & Budget]\n- Target timeline:\n- Estimated budget:\n\n[Current Setup or Reference Links]\n(Please share any current websites or tools if available)`
  };
 
@@ -174,7 +174,7 @@
   successCard.innerHTML = `
    <div class="success-icon" aria-hidden="true">✓</div>
    <h3>${ja ? 'ご相談を受け付けました' : 'Thank You for Reaching Out'}</h3>
-   <p>${ja ? '送信サービスがご相談を受け付けました。内容を確認してご連絡します。' : 'The delivery service has accepted your inquiry. We will review it and get back to you.'}</p>
+   <p>${ja ? '送信が完了しました。内容を確認のうえ、ご連絡します。' : 'Your inquiry has been sent. We will review it and get back to you.'}</p>
    <button class="btn small" type="button" id="reset-form-btn">${ja ? '新しい相談を送る' : 'Send another inquiry'}</button>
   `;
   successCard.style.display = 'block';
@@ -194,7 +194,7 @@
    for(const option of sel.options) if(option.dataset[ja?'ja':'en']) option.textContent=option.dataset[ja?'ja':'en'];
   }
   syncServiceCards();
-  submit.textContent=busy?t('送信中…','Sending…'):direct?t('相談内容を送信する','Send your inquiry'):t('メールソフトで確認する','Review in mail app');
+  submit.textContent=busy?t('送信中…','Sending…'):direct?t('相談内容を送信する','Send your inquiry'):t('メールソフトを開く','Open mail app');
   message.placeholder=t('3,000文字以内。希望する時期や予算があれば、あわせてご記入ください。','Up to 3,000 characters. Include your preferred timing or budget, if any.');
   status.textContent=state?notices[state][ja?0:1]:'';
   status.dataset.state=state;
@@ -215,7 +215,7 @@
    t('お名前: ','Name: ')+data.get('name'),
    t('返信先: ','Reply email: ')+data.get('email'),
    t('事業名: ','Business: ')+data.get('company'),
-   ...(example?[t('参考の制作例: ','Reference concept: ')+example]:[]),
+   ...(example?[t('参考にした制作例: ','Reference concept: ')+example]:[]),
    '',
    data.get('message')
   ].join('\r\n');
@@ -234,7 +234,7 @@
  });
  document.getElementById('copy-message').addEventListener('click',async()=>{try{await navigator.clipboard.writeText('To: wingscraft.studio@gmail.com\r\n\r\n'+bodyText());setState('copied')}catch{setState('copyFailed')}});
  document.addEventListener('wingscraft:language',render);
- if(example){const note=document.createElement('p');note.className='field-help reference-note';note.textContent=t('参考の制作例: ','Reference concept: ')+example;service.after(note);document.addEventListener('wingscraft:language',()=>note.textContent=t('参考の制作例: ','Reference concept: ')+example);}
+ if(example){const note=document.createElement('p');note.className='field-help reference-note';note.textContent=t('参考にした制作例: ','Reference concept: ')+example;service.after(note);document.addEventListener('wingscraft:language',()=>note.textContent=t('参考にした制作例: ','Reference concept: ')+example);}
  restoreDraft();
  render();
 })();

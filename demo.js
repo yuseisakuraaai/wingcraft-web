@@ -34,7 +34,7 @@
  function statistic(label,value){return `<div class="stat"><span class="stat-label">${label}</span><strong>${value}</strong></div>`;}
  function renderStats(){
   if(kind==='inquiries')stats.innerHTML=statistic(t('未対応','New'),inquiries.filter(x=>x.status==='new').length)+statistic(t('対応中','In progress'),inquiries.filter(x=>x.status==='progress').length);
-  else {const rows=bookings.filter(x=>x.date===day&&!x.canceled);stats.innerHTML=statistic(t('この日の予約','Bookings this day'),rows.length)+statistic(t('空き枠（30分単位）','Available 30-min slots'),slots.filter(start=>available(day,start,30)).length);}
+  else {const rows=bookings.filter(x=>x.date===day&&!x.canceled);stats.innerHTML=statistic(t('この日の予約','Bookings this day'),rows.length)+statistic(t('空き時間','Available times'),slots.filter(start=>available(day,start,30)).length);}
   animateStats();
  }
  function animateStats(){const values=[...stats.querySelectorAll('strong')];values.forEach((el,i)=>{if(previousStats[i]!==undefined&&previousStats[i]!==el.textContent)el.classList.add('number-changed');});previousStats=values.map(el=>el.textContent);}
@@ -43,7 +43,7 @@
  function captureInquiry(){const form=document.getElementById('inquiry-form');if(!form)return;const x=inquiries.find(x=>x.id===active);if(x){const draft={status:form.elements.status.value,owner:form.elements.owner.value,note:form.elements.note.value};if(draft.status===x.status&&draft.owner===x.owner&&draft.note===x.note)delete x.draft;else x.draft=draft;}}
  function renderInquiries(){
   if(detailDialog.open)detailDialog.close();detailDialog.replaceChildren();
-  content.innerHTML=`<div class="desk"><section class="panel" aria-labelledby="list-title"><div class="panel-head"><h2 id="list-title">${t('受信トレイ','Inbox')}</h2></div><div class="toolbar"><label for="inquiry-search">${t('検索','Search')}<input id="inquiry-search" type="search" maxlength="100" value="${esc(query)}" placeholder="${t('店舗名・内容','Business or subject')}"></label><label for="inquiry-filter">${t('対応状況','Status')}<select id="inquiry-filter"><option value="all">${t('すべて','All statuses')}</option>${options(statuses,filter)}</select></label></div><div id="inquiry-list" class="inquiry-list"></div></section><section id="inquiry-detail" class="panel" aria-label="${t('問い合わせの詳細','Inquiry details')}"></section></div>`;
+  content.innerHTML=`<div class="desk"><section class="panel" aria-labelledby="list-title"><div class="panel-head"><h2 id="list-title">${t('受信トレイ','Inbox')}</h2><p>${t('お問い合わせを選ぶと、詳細を確認できます。','Select an inquiry to view its details.')}</p></div><div class="toolbar"><label for="inquiry-search">${t('検索','Search')}<input id="inquiry-search" type="search" maxlength="100" value="${esc(query)}" placeholder="${t('店舗名・相談内容','Business or subject')}"></label><label for="inquiry-filter">${t('対応状況','Status')}<select id="inquiry-filter"><option value="all">${t('すべて','All statuses')}</option>${options(statuses,filter)}</select></label></div><div id="inquiry-list" class="inquiry-list"></div></section><section id="inquiry-detail" class="panel" aria-label="${t('問い合わせの詳細','Inquiry details')}"></section></div>`;
   document.getElementById('inquiry-filter').value=filter;
   document.getElementById('inquiry-search').addEventListener('input',e=>{captureInquiry();query=e.target.value;renderList();});
   document.getElementById('inquiry-filter').addEventListener('change',e=>{captureInquiry();filter=e.target.value;renderList();});
@@ -71,7 +71,7 @@
  }
  function renderBookings(){
   const rows=bookings.filter(x=>x.date===day).sort((a,b)=>a.start-b.start||a.id-b.id);
-  content.innerHTML=`<div class="booking-controls"><div class="day-picker" role="group" aria-label="${t('サンプルの日付','Sample dates')}">${dates.map(date=>`<button type="button" data-day="${date}" aria-pressed="${date===day}">${esc(dateLabel(date))}</button>`).join('')}</div><button class="primary" id="add-booking" type="button">${t('予約を追加','Add booking')}</button></div><div class="booking-layout"><section class="panel" aria-labelledby="schedule-title"><div class="panel-head"><h2 id="schedule-title">${esc(dateLabel(day))}</h2></div>${rows.length?rows.map(x=>`<article data-booking="${x.id}" class="appointment ${x.canceled?'canceled':''}"><time>${clock(x.start)}</time><div><h3>${esc(pair(people[x.person]))}</h3><p>${pair(services[x.service].label)} · ${services[x.service].duration}${t('分',' min')}${x.canceled?' · '+t('キャンセル済み','Canceled'):''}</p></div>${x.canceled?`<span class="status-chip">${t('取消','Canceled')}</span>`:`<button type="button" data-edit="${x.id}">${t('変更','Edit')}</button>`}</article>`).join(''):`<p class="empty">${t('この日の予約はありません。空き枠から追加できます。','No bookings for this day. Choose an available time to add one.')}</p>`}</section><aside class="panel availability"><h2>${t('空き枠から追加','Choose an available time')}</h2><p>${t('30分の相談枠','30-minute consultations')}</p><div class="available-slots">${slots.map(start=>`<button type="button" data-slot="${start}" ${available(day,start,30)?'':'disabled'} aria-label="${clock(start)} ${available(day,start,30)?t('空き','available'):t('予約済み','unavailable')}">${clock(start)}</button>`).join('')}</div><p class="sample-legend">${t('表示時刻は日本時間（JST）。12:00–13:00は休憩時間','Times are Japan Standard Time (JST). Lunch: 12:00–13:00')}</p></aside></div>`;
+  content.innerHTML=`<div class="booking-controls"><div class="day-picker" role="group" aria-label="${t('サンプルの日付','Sample dates')}">${dates.map(date=>`<button type="button" data-day="${date}" aria-pressed="${date===day}">${esc(dateLabel(date))}</button>`).join('')}</div><button class="primary" id="add-booking" type="button">${t('新しい予約を追加','Add a booking')}</button></div><div class="booking-layout"><section class="panel" aria-labelledby="schedule-title"><div class="panel-head"><h2 id="schedule-title">${esc(dateLabel(day))}</h2><p>${t('予約を選ぶと、時間の変更やキャンセルができます。','Select a booking to change its time or cancel it.')}</p></div>${rows.length?rows.map(x=>`<article data-booking="${x.id}" class="appointment ${x.canceled?'canceled':''}"><time>${clock(x.start)}</time><div><h3>${esc(pair(people[x.person]))}</h3><p>${pair(services[x.service].label)} · ${services[x.service].duration}${t('分',' min')}${x.canceled?' · '+t('キャンセル済み','Canceled'):''}</p></div>${x.canceled?`<span class="status-chip">${t('キャンセル済み','Canceled')}</span>`:`<button type="button" data-edit="${x.id}">${t('変更する','Edit')}</button>`}</article>`).join(''):`<p class="empty">${t('この日の予約はありません。右側の空き時間から追加できます。','No bookings for this day. Choose an open time on the right to add one.')}</p>`}</section><aside class="panel availability"><h2>${t('空き時間','Available times')}</h2><p>${t('時間を選ぶと予約追加画面が開きます。','Choose a time to open the booking form.')}</p><div class="available-slots">${slots.map(start=>`<button type="button" data-slot="${start}" ${available(day,start,30)?'':'disabled'} aria-label="${clock(start)} ${available(day,start,30)?t('空き','available'):t('予約済み','unavailable')}">${clock(start)}</button>`).join('')}</div><p class="sample-legend">${t('表示時刻は日本時間（JST）。12:00〜13:00は休憩時間です。','Times are Japan Standard Time (JST). Lunch: 12:00–13:00.')}</p></aside></div>`;
   content.querySelectorAll('[data-day]').forEach(button=>button.addEventListener('click',()=>{day=button.dataset.day;renderStats();renderBookings();content.querySelector(`[data-day="${day}"]`).focus();}));
   document.getElementById('add-booking').addEventListener('click',()=>openBooking());
   content.querySelectorAll('[data-edit]').forEach(button=>button.addEventListener('click',()=>openBooking(Number(button.dataset.edit))));
@@ -83,55 +83,14 @@
   renderBookingDialog();dialog.showModal();
  }
  
- function downloadIcs(date, startMinutes, durationMinutes, title, desc){
-  const stamp=value=>value.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
-  const start=new Date(date+'T'+clock(startMinutes)+':00+09:00');
-  const dtStart=stamp(start),dtEnd=stamp(new Date(start.getTime()+durationMinutes*60000));
-  const escapeIcs=value=>String(value).replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/[,;]/g,'\\$&');
-  const ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Wingscraft//Booking Demo//JA',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    `UID:wingscraft-${Date.now()}@wingscraft.dev`,
-    `DTSTAMP:${stamp(new Date())}`,
-    `DTSTART:${dtStart}`,
-    `DTEND:${dtEnd}`,
-    `SUMMARY:[DEMO] ${escapeIcs(title)}`,
-    `DESCRIPTION:${escapeIcs(desc)}`,
-    'LOCATION:Demo only - no real appointment',
-    'STATUS:TENTATIVE',
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\r\n');
-  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `wingscraft-booking-${date}.ics`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
- }
-
  function renderBookingDialog(){
   const x=bookingDraft;
-  dialog.innerHTML=`<h2 id="booking-dialog-title">${openId?t('予約を変更','Edit booking'):t('予約を追加','Add booking')}</h2><p class="required-note">${t('すべてサンプル情報です。実際の予約は作成されません。','Sample details only. No real booking will be made.')}</p><form class="booking-form" id="booking-form"><label for="booking-person">${t('サンプル顧客','Sample customer')}<select name="person" id="booking-person">${options(people,x.person)}</select></label><label for="booking-service">${t('メニュー','Service')}<select name="service" id="booking-service">${Object.entries(services).map(([key,service])=>`<option value="${key}" ${key===x.service?'selected':''}>${pair(service.label)} · ${service.duration}${t('分',' min')}</option>`).join('')}</select></label><div class="form-grid"><label for="booking-date">${t('日付','Date')}<select name="date" id="booking-date">${dates.map(date=>`<option value="${date}" ${date===x.date?'selected':''}>${esc(dateLabel(date))}</option>`).join('')}</select></label><label for="booking-start">${t('開始時刻','Start time')}<select name="start" id="booking-start" aria-describedby="booking-error">${slots.map(start=>`<option value="${start}" ${start===x.start?'selected':''}>${clock(start)}</option>`).join('')}</select></label></div><p class="form-error" id="booking-error" role="status"></p><div class="dialog-actions">${openId?`<button type="button" class="danger" id="request-cancel">${t('予約を取消','Cancel booking')}</button>`:''}<button type="button" class="quiet" id="download-ics">📅 ${t('カレンダーに追加 (.ics)','Add to Calendar (.ics)')}</button><button type="button" class="quiet" id="close-booking">${t('閉じる','Close')}</button><button type="submit" class="primary">${t('反映する','Apply')}</button></div><div id="cancel-confirm" class="cancel-confirm" hidden><p>${t('この予約をキャンセルし、空き枠に戻しますか？','Cancel this booking and release its time slot?')}</p><button type="button" class="danger" id="confirm-cancel">${t('キャンセルを確定','Confirm cancellation')}</button> <button type="button" class="quiet" id="keep-booking">${t('予約を残す','Keep booking')}</button></div></form>`;
+  dialog.innerHTML=`<h2 id="booking-dialog-title">${openId?t('予約内容を変更','Edit booking'):t('予約を追加','Add booking')}</h2><p class="required-note">${t('サンプルデータを使った操作画面です。実際の予約は作成されません。','This screen uses sample data. No real booking will be made.')}</p><form class="booking-form" id="booking-form"><label for="booking-person">${t('お客様','Customer')}<select name="person" id="booking-person">${options(people,x.person)}</select></label><label for="booking-service">${t('メニュー','Service')}<select name="service" id="booking-service">${Object.entries(services).map(([key,service])=>`<option value="${key}" ${key===x.service?'selected':''}>${pair(service.label)} · ${service.duration}${t('分',' min')}</option>`).join('')}</select></label><div class="form-grid"><label for="booking-date">${t('日付','Date')}<select name="date" id="booking-date">${dates.map(date=>`<option value="${date}" ${date===x.date?'selected':''}>${esc(dateLabel(date))}</option>`).join('')}</select></label><label for="booking-start">${t('開始時刻','Start time')}<select name="start" id="booking-start" aria-describedby="booking-error">${slots.map(start=>`<option value="${start}" ${start===x.start?'selected':''}>${clock(start)}</option>`).join('')}</select></label></div><p class="form-error" id="booking-error" role="status"></p><div class="dialog-actions">${openId?`<button type="button" class="danger" id="request-cancel">${t('予約をキャンセル','Cancel booking')}</button>`:''}<button type="button" class="quiet" id="close-booking">${t('閉じる','Close')}</button><button type="submit" class="primary">${openId?t('変更を保存','Save changes'):t('予約を追加','Add booking')}</button></div><div id="cancel-confirm" class="cancel-confirm" hidden><p>${t('この予約をキャンセルして、空き時間に戻しますか？','Cancel this booking and release its time slot?')}</p><button type="button" class="danger" id="confirm-cancel">${t('キャンセルする','Confirm cancellation')}</button> <button type="button" class="quiet" id="keep-booking">${t('予約を残す','Keep booking')}</button></div></form>`;
   const form=document.getElementById('booking-form');
   function update(){bookingDraft={...bookingDraft,person:form.elements.person.value,service:form.elements.service.value,date:form.elements.date.value,start:Number(form.elements.start.value)};const valid=available(bookingDraft.date,bookingDraft.start,services[bookingDraft.service].duration,openId);document.getElementById('booking-error').textContent=valid?'':t('この時間は他の予約または休憩・営業時間外と重なります。時間・日付・メニューを変更してください。','This time overlaps another booking, lunch or closing time. Change the time, date or service.');form.elements.start.setAttribute('aria-invalid',String(!valid));return valid;}
   form.addEventListener('change',update);
-  form.addEventListener('submit',e=>{e.preventDefault();if(!update()){form.elements.start.focus();return;}if(openId){Object.assign(bookings.find(x=>x.id===openId),bookingDraft);changedId=openId;}else {changedId=nextId++;bookings.push({...bookingDraft,id:changedId,canceled:false});}day=bookingDraft.date;dialog.close();renderStats();renderBookings();document.getElementById('add-booking').focus();say('予約を反映しました。','Booking updated.');});
+  form.addEventListener('submit',e=>{e.preventDefault();if(!update()){form.elements.start.focus();return;}const editing=Boolean(openId);if(editing){Object.assign(bookings.find(x=>x.id===openId),bookingDraft);changedId=openId;}else {changedId=nextId++;bookings.push({...bookingDraft,id:changedId,canceled:false});}day=bookingDraft.date;dialog.close();renderStats();renderBookings();document.getElementById('add-booking').focus();say(editing?'予約内容を変更しました。':'予約を追加しました。',editing?'Booking updated.':'Booking added.');});
   document.getElementById('close-booking').addEventListener('click',()=>dialog.close());
-   document.getElementById('download-ics').addEventListener('click',()=>{
-    if(!update()){form.elements.start.focus();return;}
-    const sName = pair(services[bookingDraft.service].label);
-    const pName = pair(people[bookingDraft.person]);
-    downloadIcs(bookingDraft.date, bookingDraft.start, services[bookingDraft.service].duration, `Wingscraft ${sName} (${pName})`, 'Wingscraft Booking Demo Consultation');
-    say('デモ用カレンダーファイルのダウンロードを開始しました。','Started downloading a demo calendar file.');
-   });
   if(openId){document.getElementById('request-cancel').addEventListener('click',()=>{document.getElementById('cancel-confirm').hidden=false;document.getElementById('confirm-cancel').focus();});document.getElementById('keep-booking').addEventListener('click',()=>{document.getElementById('cancel-confirm').hidden=true;document.getElementById('request-cancel').focus();});document.getElementById('confirm-cancel').addEventListener('click',()=>{const canceled=bookings.find(x=>x.id===openId);undoBooking={...canceled};canceled.canceled=true;changedId=canceled.id;dialog.close();renderStats();renderBookings();document.getElementById('add-booking').focus();say('予約をキャンセルしました。','Booking canceled.');});}
   update();
  }

@@ -52,7 +52,7 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 | `contact.js` | 入力、一時下書き、テンプレート、送信状態 | Form input, temporary drafts, templates and submission states |
 | `contact-transport.js` | Formspree通信と応答確認 | Formspree requests and response validation |
 | `site-config.js` | 公開URL、フォーム送信先、任意の解析設定。秘密鍵は置かない | Public URL, form endpoint and optional analytics; no secret keys |
-| `demo.js` | 管理デモの操作とカレンダー出力 | Management-demo interactions and calendar export |
+| `demo.js` | 問い合わせ・予約管理デモの操作 | Inquiry and booking demo interactions |
 | `demo.css` | 管理デモのデザイン | Management-demo styling |
 | `sample.js` | カフェ例の操作と言語切替 | Café-example interactions and language switching |
 | `sample.css` | カフェ例のデザイン | Café-example styling |
