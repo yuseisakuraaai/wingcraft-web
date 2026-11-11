@@ -1,5 +1,7 @@
 # Wingscraft — ファイル案内 / File Guide
 
+**リリース / Release: Version 1.0.1**
+
 ## 日本語
 
 静的HTML・CSS・JavaScriptで構成したサイトです。ビルドは不要で、このフォルダ内のファイル構成を保ったまま公開できます。
