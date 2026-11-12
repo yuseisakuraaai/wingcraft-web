@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yuseisakuraaai.github.io/wingcraft-web/sitemap.xml
+Sitemap: https://wingscraft.dev/sitemap.xml

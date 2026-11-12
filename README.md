@@ -1,6 +1,6 @@
 # Wingscraft — ファイル案内 / File Guide
 
-**リリース / Release: Version 1.1.0**
+**リリース / Release: Version 1.1.1**
 
 ## 日本語
 
@@ -14,7 +14,7 @@
 - 文章を変更する場合は、HTMLの日英両方と、関連するJavaScript内の日英文言を一緒に更新してください。
 - CSSやJavaScriptを更新した場合は、HTML内のURL末尾のバージョンも更新してください。GitHub Pagesで旧版を残さないため、オフラインキャッシュは使用していません。
 - 公開ドメインを変更する場合は、各HTMLのcanonical・OG・構造化データ、`robots.txt`、`sitemap.xml`も更新してください。
-- 現在の公開URLは `https://yuseisakuraaai.github.io/wingcraft-web/` に設定しています。GitHub Pagesでは`_headers`は適用されません。旧Service Workerと関連キャッシュは、通常ページを開いた際に自動解除します。
+- 現在の公開URLは `https://wingscraft.dev/` に設定しています。GitHub Pagesでは`_headers`は適用されません。旧Service Workerと関連キャッシュは、通常ページを開いた際に自動解除します。
 - モニター枠は自動集計されません。受付状況に合わせて`services.html`を更新してください。
 - ローカル確認は、このフォルダで `python3 -m http.server 8000` を実行し、`http://localhost:8000`を開きます。
 
@@ -30,7 +30,7 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 - When editing copy, update both language spans in HTML and related strings in JavaScript.
 - When updating CSS or JavaScript, revise the asset query versions in HTML. Offline caching is disabled so GitHub Pages does not retain an old release.
 - A domain change also requires updates to canonical, OG and structured-data URLs in HTML, plus `robots.txt` and `sitemap.xml`.
-- The current public URL is `https://yuseisakuraaai.github.io/wingcraft-web/`. GitHub Pages ignores `_headers`. Opening a regular page automatically unregisters the former service worker and clears its related caches.
+- The current public URL is `https://wingscraft.dev/`. GitHub Pages ignores `_headers`. Opening a regular page automatically unregisters the former service worker and clears its related caches.
 - Pilot availability is not tracked automatically. Update `services.html` as places are filled.
 - To preview locally, run `python3 -m http.server 8000` in this folder and open `http://localhost:8000`.
 
@@ -62,16 +62,17 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 | `sample.js` | カフェ例の操作と言語切替 | Café-example interactions and language switching |
 | `sample.css` | カフェ例のデザイン | Café-example styling |
 | `sw.js` | 旧版のオフラインキャッシュを解除する移行処理 | Migration cleanup for the former offline cache |
-| `site-v103.webmanifest` | ホーム画面追加用の名称・アイコン設定 | Installable-site name, launch settings and icons |
+| `site-v111.webmanifest` | ホーム画面追加用の名称・アイコン設定 | Installable-site name, launch settings and icons |
 | `sitemap.xml` | 公開ページ一覧 | Search-engine sitemap |
 | `robots.txt` | クローラー向け設定 | Crawler instructions |
 | `.nojekyll` | GitHub Pagesで静的ファイルをそのまま配信する設定 | Keeps static files unchanged on GitHub Pages |
 | `_headers` | 対応ホスティング用のセキュリティ・キャッシュ設定 | Security and cache headers on supported hosting |
 | `assets/logo.svg` | Wingscraftの文字ロゴ | Wingscraft wordmark |
 | `assets/mark.svg` | 文字ロゴの左に表示する翼のシンボル | Wing symbol displayed beside the wordmark |
-| `assets/favicon-v103.svg` / `assets/favicon-32x32-v103.png` | ブラウザタブ用アイコン | Browser-tab icons |
-| `apple-touch-icon-v103.png` / `apple-touch-icon.png` | Safariのお気に入り・ホーム画面用アイコン | Safari favorite and home-screen icons |
-| `assets/icon-192-v103.png` / `assets/icon-512-v103.png` | インストール表示用アイコン | Installable-site icons |
+| `assets/favicon-v111.svg` / `assets/favicon-32x32-v111.png` | ブラウザタブ用アイコン | Browser-tab icons |
+| `favicon.ico` | ファビコンを自動取得するブラウザ向けの互換アイコン | Compatibility icon for browsers requesting `/favicon.ico` |
+| `apple-touch-icon-v111.png` / `apple-touch-icon.png` | Safariのお気に入り・ホーム画面用アイコン | Safari favorite and home-screen icons |
+| `assets/icon-192-v111.png` / `assets/icon-512-v111.png` | インストール表示用アイコン | Installable-site icons |
 | `assets/og.png` | リンク共有画像 | Social-sharing image |
 | `README.md` | このファイル | This file |
 
@@ -82,6 +83,6 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 
 ### Safari icon refresh
 
-Safari用アイコンは強くキャッシュされるため、Version 1.0.3では新しいファイル名を使用しています。既に登録済みのお気に入りやホーム画面アイコンは、公開後に一度削除して追加し直してください。
+Safari用アイコンは強くキャッシュされるため、Version 1.1.1でもバージョン付きのファイル名を使用しています。既に登録済みのお気に入りやホーム画面アイコンは、公開後に一度削除して追加し直してください。
 
-Safari caches site icons aggressively, so Version 1.0.3 uses new filenames. After deployment, remove and re-add an existing favorite or Home Screen shortcut once.
+Safari caches site icons aggressively, so Version 1.1.1 continues to use versioned filenames. After deployment, remove and re-add an existing favorite or Home Screen shortcut once.

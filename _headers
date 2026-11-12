@@ -8,14 +8,17 @@
 /sw.js
   Cache-Control: public, max-age=0, must-revalidate
 
-/site-v103.webmanifest
+/site-v111.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=0, must-revalidate
 
-/apple-touch-icon-v103.png
+/apple-touch-icon-v111.png
   Cache-Control: public, max-age=0, must-revalidate
 
 /apple-touch-icon.png
+  Cache-Control: public, max-age=0, must-revalidate
+
+/favicon.ico
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
