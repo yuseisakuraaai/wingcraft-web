@@ -154,3 +154,12 @@ html[lang="ja"] .page-index .home-hero h1 {
 .logo img.logo-mark,.bar .logo img.logo-mark,footer .logo img.logo-mark{display:block;width:50px;height:40px;flex:none}
 @media (max-width:640px){.logo{gap:8px}.logo img.logo-mark,.bar .logo img.logo-mark{width:42px;height:33px}}
 @media (max-width:420px){.logo{gap:6px}.logo img.logo-mark,.bar .logo img.logo-mark{width:36px;height:29px}.bar .logo img{width:100px}}
+
+/* Keep the pilot-program explanation on one line where the viewport permits. */
+@media screen and (min-width: 1001px) {
+  .page-services .pilot-summary {
+    max-width: none;
+    white-space: nowrap;
+    font-size: clamp(11px, .95vw, 14px);
+  }
+}

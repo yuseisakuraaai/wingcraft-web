@@ -226,10 +226,22 @@
  });
  initCommandPalette();
 
- // --- Service Worker Registration (PWA Offline Capability) ---
+ // GitHub Pages serves current files reliably; remove the former offline cache
+ // so a previous release cannot keep stale HTML or links on visitors' devices.
  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-  window.addEventListener('load', () => {
-   navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).catch(() => {});
+  window.addEventListener('load', async () => {
+   try {
+    const registrations=await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations
+     .filter(registration=>registration.scope.startsWith(new URL('./',location.href).href))
+     .map(registration=>registration.unregister()));
+   } catch {}
+   if ('caches' in window) {
+    try {
+     const keys=await caches.keys();
+     await Promise.all(keys.filter(key=>key.startsWith('wingscraft-')).map(key=>caches.delete(key)));
+    } catch {}
+   }
   });
  }
 

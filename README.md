@@ -1,6 +1,6 @@
 # Wingscraft — ファイル案内 / File Guide
 
-**リリース / Release: Version 1.0.2**
+**リリース / Release: Version 1.0.3**
 
 ## 日本語
 
@@ -12,8 +12,9 @@
 - 問い合わせフォームはFormspreeに接続済みです。JavaScriptが無効でもFormspreeへ通常送信できます。デモ画面は実際のメール送信や予約を行いません。
 - ページ本文のドラッグ選択・コピーは無効です。フォームの入力欄では通常どおり選択・コピーできます。これは一般的な操作を抑えるもので、画面撮影や開発者ツールからの取得を防ぐものではありません。
 - 文章を変更する場合は、HTMLの日英両方と、関連するJavaScript内の日英文言を一緒に更新してください。
-- CSSやJavaScriptを更新した場合は、HTML内のURL末尾のバージョンと、`sw.js`のキャッシュ名・事前取得URLも更新してください。
+- CSSやJavaScriptを更新した場合は、HTML内のURL末尾のバージョンも更新してください。GitHub Pagesで旧版を残さないため、オフラインキャッシュは使用していません。
 - 公開ドメインを変更する場合は、各HTMLのcanonical・OG・構造化データ、`robots.txt`、`sitemap.xml`も更新してください。
+- 現在の公開URLは `https://yuseisakuraaai.github.io/wingcraft-web/` に設定しています。GitHub Pagesでは`_headers`は適用されません。旧Service Workerと関連キャッシュは、通常ページを開いた際に自動解除します。
 - モニター枠は自動集計されません。受付状況に合わせて`services.html`を更新してください。
 - ローカル確認は、このフォルダで `python3 -m http.server 8000` を実行し、`http://localhost:8000`を開きます。
 
@@ -27,8 +28,9 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 - The inquiry form is connected to Formspree and retains a standard HTML submission when JavaScript is unavailable. Demo screens do not send real messages or create real bookings.
 - Drag selection and copying are disabled for page content. Form fields remain selectable and copyable. This only blocks ordinary browser interaction; it does not prevent screenshots or access through developer tools.
 - When editing copy, update both language spans in HTML and related strings in JavaScript.
-- When updating CSS or JavaScript, revise the asset query versions in HTML and the cache name and precache URLs in `sw.js` together.
+- When updating CSS or JavaScript, revise the asset query versions in HTML. Offline caching is disabled so GitHub Pages does not retain an old release.
 - A domain change also requires updates to canonical, OG and structured-data URLs in HTML, plus `robots.txt` and `sitemap.xml`.
+- The current public URL is `https://yuseisakuraaai.github.io/wingcraft-web/`. GitHub Pages ignores `_headers`. Opening a regular page automatically unregisters the former service worker and clears its related caches.
 - Pilot availability is not tracked automatically. Update `services.html` as places are filled.
 - To preview locally, run `python3 -m http.server 8000` in this folder and open `http://localhost:8000`.
 
@@ -36,7 +38,7 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 
 | File | 日本語 | English |
 | --- | --- | --- |
-| `index.html` | ホーム、自動転記デモ、サービスと制作例の概要 | Home, automatic-entry demo, and service/work overview |
+| `index.html` | ホーム、サービス・制作プロセス・ライブデモの概要 | Home, service, process and live-demo overview |
 | `services.html` | サービス、各5件のモニター料金、制作手順、FAQ | Services, five pilot places per service, process and FAQs |
 | `examples.html` | 3つの自主制作デモ一覧 | Index of three independent demos |
 | `projects.html` | Wingscraft Bookingの構想と画面例 | Wingscraft Booking concept and interface study |
@@ -52,7 +54,6 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 | `script.js` | 日英切替、ショートカット検索、メールコピーなど | Language switching, keyboard search, email copy and shared controls |
 | `navigation.js` | モバイルメニューとキーボード操作 | Mobile menu and keyboard navigation |
 | `motion.js` | スクロール演出と「動きを減らす」設定への対応 | Scroll reveals and reduced-motion support |
-| `workflow.js` | ホームの自動転記デモ | Home automatic-entry simulation |
 | `contact.js` | 入力、一時下書き、テンプレート、送信状態 | Form input, temporary drafts, templates and submission states |
 | `contact-transport.js` | Formspree通信と応答確認 | Formspree requests and response validation |
 | `site-config.js` | 公開URL、フォーム送信先、任意の解析設定。秘密鍵は置かない | Public URL, form endpoint and optional analytics; no secret keys |
@@ -60,20 +61,27 @@ This is a static HTML, CSS and JavaScript website. No build step is required. Pu
 | `demo.css` | 管理デモのデザイン | Management-demo styling |
 | `sample.js` | カフェ例の操作と言語切替 | Café-example interactions and language switching |
 | `sample.css` | カフェ例のデザイン | Café-example styling |
-| `sw.js` | オフライン用キャッシュと更新処理 | Offline cache and update handling |
-| `site.webmanifest` | ホーム画面追加用の名称・アイコン設定 | Installable-site name, launch settings and icons |
+| `sw.js` | 旧版のオフラインキャッシュを解除する移行処理 | Migration cleanup for the former offline cache |
+| `site-v103.webmanifest` | ホーム画面追加用の名称・アイコン設定 | Installable-site name, launch settings and icons |
 | `sitemap.xml` | 公開ページ一覧 | Search-engine sitemap |
 | `robots.txt` | クローラー向け設定 | Crawler instructions |
+| `.nojekyll` | GitHub Pagesで静的ファイルをそのまま配信する設定 | Keeps static files unchanged on GitHub Pages |
 | `_headers` | 対応ホスティング用のセキュリティ・キャッシュ設定 | Security and cache headers on supported hosting |
-| `assets/logo.svg` | ロゴ | Site wordmark |
-| `assets/logo.svg` | ヘッダーとブラウザタブで共用するWingscraftロゴ | Wingscraft logo shared by the header and browser tabs |
-| `assets/favicon-32x32.png` | 小サイズ用ブラウザタブアイコン | Small browser-tab icon |
-| `assets/apple-touch-icon.png` | Apple端末のホーム画面用アイコン | Apple home-screen icon |
-| `assets/icon-192.png` / `assets/icon-512.png` | インストール表示用アイコン | Installable-site icons |
+| `assets/logo.svg` | Wingscraftの文字ロゴ | Wingscraft wordmark |
+| `assets/mark.svg` | 文字ロゴの左に表示する翼のシンボル | Wing symbol displayed beside the wordmark |
+| `assets/favicon-v103.svg` / `assets/favicon-32x32-v103.png` | ブラウザタブ用アイコン | Browser-tab icons |
+| `apple-touch-icon-v103.png` / `apple-touch-icon.png` | Safariのお気に入り・ホーム画面用アイコン | Safari favorite and home-screen icons |
+| `assets/icon-192-v103.png` / `assets/icon-512-v103.png` | インストール表示用アイコン | Installable-site icons |
 | `assets/og.png` | リンク共有画像 | Social-sharing image |
 | `README.md` | このファイル | This file |
 
 ## Logo mark
 
-- `assets/mark.svg`: illustrated mark (a pair of feathered wings around a globe), placed to the left of the wordmark in every header and footer (and the demo pages).
-- `assets/favicon.svg` and the PNG icons (`favicon-32x32`, `apple-touch-icon`, `icon-192`, `icon-512`) use the same mark on a dark badge.
+- `assets/mark.svg`: illustrated mark with a pair of feathered wings and a central diamond, placed to the left of the wordmark in every header, footer, and demo page.
+- The SVG favicon and PNG icons use the same wing mark on a dark badge.
+
+### Safari icon refresh
+
+Safari用アイコンは強くキャッシュされるため、Version 1.0.3では新しいファイル名を使用しています。既に登録済みのお気に入りやホーム画面アイコンは、公開後に一度削除して追加し直してください。
+
+Safari caches site icons aggressively, so Version 1.0.3 uses new filenames. After deployment, remove and re-add an existing favorite or Home Screen shortcut once.
