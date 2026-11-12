@@ -1,6 +1,6 @@
 # Wingscraft — ファイル案内 / File Guide
 
-**リリース / Release: Version 1.0.3**
+**リリース / Release: Version 1.1.0**
 
 ## 日本語
 
